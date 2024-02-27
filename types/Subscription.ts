@@ -1,11 +1,8 @@
+import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
+import Stripe from "stripe";
 
-
-import {DocumentData, DocumentReference, Timestamp} from "firebase/firestore"
-import {Stripe} from "stripe"
-
-export interface Subscription{
-    id?:string;
-
+export interface Subscription {
+    id?: string;
 
     metadata: {
         [name: string]: string;
@@ -17,23 +14,20 @@ export interface Subscription{
 
     product: DocumentReference<DocumentData>;
 
-    price: DocumentReference<DocumentData>;
+    price: DocumentReference<DocumentData>
 
-    prices: Array<
-        DocumentReference<DocumentData>
-    >;
-
+    prices: Array<DocumentReference<DocumentData>>;
     payment_method?: string;
     latest_invoice?: string;
 
     status:
-       | 'active'
-       | 'canceled'
-       | 'incomplete'
-       | 'incomplete_expired'
-       | 'past_due'
-       | 'trailing'
-       | 'unpaid';
+    | 'active'
+    | 'canceled'
+    | 'incomplete'
+    | 'incomplete_expired'
+    | 'past_due'
+    | 'trialing'
+    | 'unpaid';
 
     cancel_at_period_end: boolean;
 
@@ -52,5 +46,4 @@ export interface Subscription{
     trial_start: Timestamp | null;
 
     trial_end: Timestamp | null;
-
 }
