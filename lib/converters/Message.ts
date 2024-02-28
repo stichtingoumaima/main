@@ -21,6 +21,8 @@ export interface User {
 export interface Message {
     id?: string;
     input: string;
+    prompt: string;
+    response: string;
     timestamp: Date;
     user: User;
     translated?: {
@@ -32,8 +34,10 @@ const messageConverter: FirestoreDataConverter<Message> = {
     toFirestore: function (message: Message): DocumentData {
         return {
             input: message.input,
+            prompt:message.input,
             timestamp: message.timestamp,
             user: message.user,
+            response: message.response
             // ...other fields
         };
     },
@@ -46,6 +50,8 @@ const messageConverter: FirestoreDataConverter<Message> = {
         return {
             id: snapshot.id,
             input: data.input,
+            prompt: data.input,
+            response: data.response,
             timestamp: data.timestamp?.toDate(),
             translated: data.translated,
             user: data.user,

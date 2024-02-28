@@ -85,8 +85,10 @@ function ChatInput({ chatId }: { chatId: string }) {
 
         addDoc(messagesRef(chatId), {
             input: inputCopy,
+            prompt:inputCopy,
             timestamp: serverTimestamp(),
             user: userToStore,
+            response:""
         });
 
     }
