@@ -9,36 +9,36 @@ import CreateChatButton from "./CreateChatButton";
 import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
 
-const routeList: RouteProps[] = [
-    {
-      href: "#Main",
-      label: "Main",
-    },
-    {
-      href: "#Features",
-      label: "Features",
-    },
-    {
-      href: "#Characters",
-      label: "Characters",
-    },
-    {
-      href: "#Play Now",
-      label: "Play Now",
-    },
-    {
-      href: "#Story",
-      label: "Story",
-    },
-    {
-      href: "#News",
-      label: "News",
-    },
-    {
-      href: "#Pricing",
-      label: "Pricing",
-    },
-  ];
+// const routeList: RouteProps[] = [
+//     {
+//       href: "#Main",
+//       label: "Main",
+//     },
+//     {
+//       href: "#Features",
+//       label: "Features",
+//     },
+//     {
+//       href: "#Characters",
+//       label: "Characters",
+//     },
+//     {
+//       href: "#Play Now",
+//       label: "Play Now",
+//     },
+//     {
+//       href: "#Story",
+//       label: "Story",
+//     },
+//     {
+//       href: "#News",
+//       label: "News",
+//     },
+//     {
+//       href: "#Pricing",
+//       label: "Pricing",
+//     },
+//   ];
 
 async function Header() {
     const session = await getServerSession(authOptions);

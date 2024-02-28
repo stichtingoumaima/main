@@ -31,22 +31,19 @@ const features: FeatureProps[] = [
 ];
 export const About = () => {
   return (
-    <section
-      id="about"
-      className="   bg-cover bg-no-repeat bg-center h-screen w-full "   
+<section id="about" className="bg-cover bg-no-repeat bg-center h-screen w-full">
+  <div className="absolute overflow-hidden w-full h-screen">
+    <video
+      autoPlay
+      loop
+      muted
+      className="absolute top-0 left-0 w-full h-screen object-cover z-[-1]"
+      src="./assets/section2-simple.mp4"
     >
-                   <div className="absolute overflow-hidden w-full h-screen "> 
-            <video
-        autoPlay
-        loop
-        muted
-        className="absolute top-0 left-0 w-full h-screen object-cover z-[-1]"
-        src="./assets/section2-simple.mp4"
-        type="video/mp4"
-      >
-        Your browser does not support the video tag.
-      </video>
-      </div>
+      <source src="./assets/section2-simple.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
    {/*   
       <div className="border rounded-lg py-12">
         <div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">

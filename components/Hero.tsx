@@ -6,19 +6,19 @@ const backgroundImageUrl = './assets/background.jpeg';
 export const Hero = () => {
   return (
    
-    <section className=" grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 bg-cover bg-no-repeat bg-center h-screen w-full z-50" >
-             <div className="absolute overflow-hidden w-full h-screen "> 
-            <video
-        autoPlay
-        loop
-        muted
-        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-        src="./assets/video.mp4"
-        type="video/mp4"
-      >
-        Your browser does not support the video tag.
-      </video>
-      </div>
+<section className=" grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 bg-cover bg-no-repeat bg-center h-screen w-full z-50" >
+  <div className="absolute overflow-hidden w-full h-screen "> 
+    <video
+      autoPlay
+      loop
+      muted
+      className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+      src="./assets/video.mp4"
+    >
+      <source src="./assets/video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
       <div className="text-center space-y-6 ">
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">

@@ -8,6 +8,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { AlarmClock, InfoIcon } from "lucide-react";
+import Image from "next/image";
 
 export const HeroCards = () => {
   return (
@@ -36,7 +37,7 @@ export const HeroCards = () => {
     <div className="flex flex-col">
       <CardTitle>ITEM DROP</CardTitle>
       <div className="border-l-4 border-yellow-400 pl-2 mt-2">
-        <h3 className="font-bold">[NAME: DEMON KING'S DAGGER]</h3>
+        <h3 className="font-bold">NAME: DEMON KING&apos;S DAGGER</h3>
         <p>ITEM CLASS: S</p>
         <p>TYPE: DAGGER</p>
       </div>
@@ -51,9 +52,9 @@ export const HeroCards = () => {
       <div className="p-2 border border-yellow-400">
         {/* Your item image here */}
         <Image
-      src="./assets/barran.png"
-      width={16}
-      height={16}
+      src="/assets/barran.png"
+      width={80}
+      height={80}
       alt="DEMON KING'S DAGGER"
     />
     
@@ -63,9 +64,9 @@ export const HeroCards = () => {
         <p>DAGGER OBTAINED FROM THE DEMON KING BARAN.</p>
       </div>
     </div>
-    <p>SET EFFECT WILL ACTIVATE IF BOTH 'DEMON KING'S DAGGERS' ARE EQUIPPED AT THE SAME TIME.</p>
+    <p>SET EFFECT WILL ACTIVATE IF BOTH &apos;DEMON KING&apos;S DAGGERS&apos; ARE EQUIPPED AT THE SAME TIME.</p>
     <p className="mt-2">
-      <span className="font-bold">SET EFFECT 'TWO AS ONE':</span>
+      <span className="font-bold">SET EFFECT &apos;TWO AS ONE&apos;:</span>
       ADDITIONAL ATTACK WILL APPLY TO EACH DAGGER BY THE AMOUNT OF THE STRENGTH STAT.
     </p>
   </CardContent>
