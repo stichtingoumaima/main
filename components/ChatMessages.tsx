@@ -50,7 +50,7 @@ function ChatMessages({
         </div>
       )}
 
-      {messages?.map((message) => {
+      {messages?.map((message : Message) => {
         const isSender = message.user.id === session?.user.id;
 
         return (

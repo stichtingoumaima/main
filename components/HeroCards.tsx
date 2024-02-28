@@ -50,7 +50,13 @@ export const HeroCards = () => {
     <div className="flex items-center gap-4 mb-4">
       <div className="p-2 border border-yellow-400">
         {/* Your item image here */}
-        <img src="./assets/barran.png" alt="DEMON KING'S DAGGER" className="w-16 h-16" />
+        <Image
+      src="./assets/barran.png"
+      width={16}
+      height={16}
+      alt="DEMON KING'S DAGGER"
+    />
+    
       </div>
       <div>
         <p className="text-yellow-400 font-bold">ATTACK +220</p>
