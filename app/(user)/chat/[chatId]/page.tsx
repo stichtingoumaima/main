@@ -25,7 +25,7 @@ async function ChatPage({ params: { chatId } }: Props) {
     if (!hasAccess) redirect("/chat?error=permission");
 
     return (
-        <>
+        <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto">
             <AdminControls chatId={chatId} />
 
             <ChatMembersBadges chatId={chatId} />
@@ -38,7 +38,7 @@ async function ChatPage({ params: { chatId } }: Props) {
                 />
             </div>
             <ChatInput chatId={chatId} />
-        </>
+        </div>
     );
 }
 
