@@ -1,5 +1,6 @@
 import { authOptions } from "@/auth"
 import AdminControls from "@/components/AdminControls";
+import BgVideo from "@/components/BgVideo";
 import ChatInput from "@/components/ChatInput";
 import ChatMembersBadges from "@/components/ChatMembersBadges";
 import ChatMessages from "@/components/ChatMessages";
@@ -25,7 +26,7 @@ async function ChatPage({ params: { chatId } }: Props) {
     if (!hasAccess) redirect("/chat?error=permission");
 
     return (
-        <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto">
+        <><BgVideo></BgVideo><div className="flex-1 w-full flex flex-col max-w-6xl mx-auto">
             <AdminControls chatId={chatId} />
 
             <ChatMembersBadges chatId={chatId} />
@@ -34,11 +35,10 @@ async function ChatPage({ params: { chatId } }: Props) {
                 <ChatMessages
                     chatId={chatId}
                     session={session}
-                    initialMessages={initialMessages}
-                />
+                    initialMessages={initialMessages} />
             </div>
             <ChatInput chatId={chatId} />
-        </div>
+        </div></>
     );
 }
 
