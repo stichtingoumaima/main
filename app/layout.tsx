@@ -9,8 +9,8 @@ import SubscriptionProvider from '@/components/SubscriptionProvider'
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'SimpleAI',
-  description: 'Your one shop stop to a better funnel',
+  title: 'IRLQUEST',
+  description: 'Gamifying IRL Progress Through AI',
 }
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
                 enableSystem
                 disableTransitionOnChange
               >
-                <Header />
+           
 
                 {children}
 

@@ -4,6 +4,9 @@ import GoogleProvider from "next-auth/providers/google"
 import { adminAuth, adminDb } from "./firebase-admin";
 
 export const authOptions: NextAuthOptions = {
+    pages: {
+        signIn: '/login', //(4) custom signin page path
+      },
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -15,6 +18,7 @@ export const authOptions: NextAuthOptions = {
             if (session?.user) {
                 if (token.sub) {
                     session.user.id = token.sub;
+
 
                     const firebaseToken = await adminAuth.createCustomToken(token.sub);
                     session.firebaseToken = firebaseToken;
