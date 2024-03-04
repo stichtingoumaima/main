@@ -52,9 +52,8 @@ function ChatMessages({
 
       {messages?.map((message: Message) => {
         const isSender = message.user.id === session?.user.id;
-
         return (
-          <div className={`flex gap-4 bg-black bg-opacity-25 ${
+          <div className={`flex gap-4 bg-black bg-opacity-25 relative line-clamp-1 ${
             isSender ? "justify-end text-right" : "text-left"
           }`} key={message.id}>
             {/* Left Side */}
@@ -89,8 +88,7 @@ function ChatMessages({
           </div>
         );
       })}
-
-      <div ref={messagesEndRef} />
+<div ref={messagesEndRef} style={{ height: '1px' }} />
     </div>
   );
 }
