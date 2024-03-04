@@ -1,3 +1,5 @@
+import BgVideo from "@/components/BgVideo";
+
 export default function ChatsLayout({
     children,
 }: {
@@ -5,6 +7,7 @@ export default function ChatsLayout({
 }) {
     return (
         <div className="">
+        
             {children}
         </div>
     );

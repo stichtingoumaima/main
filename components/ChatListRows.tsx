@@ -19,7 +19,6 @@ function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
 
     if (members?.length === 0) {
         return (
-            
             <div className="flex flex-col justify-center items-center pt-40 space-y-2">
                 <MessageSquare className="h-10 w-10" />
                 <h1 className="text-5xl font-extralight">Welcome!</h1>

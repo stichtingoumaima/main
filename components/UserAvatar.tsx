@@ -12,17 +12,16 @@ function UserAvatar({
     image?: string | null;
     className?: string;
 }) {
-    return <Avatar className={cn('bg-white text-black', className)}>
-        {image && (
-            <Image
-                src={image}
-                alt={name || 'User name'}
-                width={40}
-                height={40}
-                referrerPolicy="no-referrer"
-                className="rounded-full"
-            />
-
+    return <Avatar className={cn('bg-white text-black h-[40px] w-[40px] rounded-full overflow-hidden shadow-md transform transition duration-300 ease-in-out hover:border-white hover:border-4 hover:scale-125 hover:avatar-inner-glow', className)}>
+    {image && (
+        <Image
+            src={image}
+            alt={name || 'User name'}
+            width={90}
+            height={90}
+            referrerPolicy="no-referrer"
+            className="object-cover object-center w-full h-full"
+        />
 
         )}
         <AvatarFallback

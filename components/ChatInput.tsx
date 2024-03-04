@@ -98,17 +98,17 @@ function ChatInput({ chatId }: { chatId: string }) {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex space-x-2 p-2 rounded-t-xl max-2-4xl mx-auto bg-white border dark:bg-slate-800"
+                    className="flex space-x-2 py-5  max-2-4xl mx-auto bg-white border dark:bg-slate-800 bg-opacity-25 "
                 >
                     <FormField
                         control={form.control}
                         name="input"
                         render={({ field }) => (
-                            <FormItem className="flex-1">
+                            <FormItem className="flex-1  bg-transparent focus:bg-white border-2 border-zinc-700 w-4/6 h-full rounded-full transition duration-300 ease-in-out" >
                                 <FormControl>
                                     <Input
-                                        className="border-none bg-transparent dark:placeholder:text-white/70"
-                                        placeholder="Enter message in ANY language..."
+                                        className="border-none bg-transparent focus:bg-white border-2 rounded-full text-black dark:placeholder:text-gray-300 font-semibold h-12 text-3xl text-center"
+                                        placeholder="Click to enter"
                                         {...field}
                                     />
                                 </FormControl>
@@ -116,7 +116,7 @@ function ChatInput({ chatId }: { chatId: string }) {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="bg-violet-600 text-white">
+                    <Button type="submit" className="bg-yellow-50 rounded-full h-12 w-36  text-2xl font-semibold text-gray-600">
                         Send
                     </Button>
                 </form>
