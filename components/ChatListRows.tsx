@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from 'next/router';
+
 import { ChatMembers, chatMembersCollectionGroupRef } from "@/lib/converters/ChatMembers"
 import { useSession } from "next-auth/react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
@@ -9,8 +9,7 @@ import ChatListRow from "./ChatListRow";
 
 function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
     const { data: session } = useSession();
-    const router = useRouter();
-    const currentChatId = router.query.chatId;
+    
 
     const [members, loading, error] = useCollectionData<ChatMembers>(
         session && chatMembersCollectionGroupRef(session?.user.id!),
@@ -36,7 +35,7 @@ function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
     return ( 
         <div className="">
             {members?.map((member, i) => (
-                <ChatListRow key={member.chatId} chatId={member.chatId} isActive={member?.chatId === currentChatId} />
+                <ChatListRow key={member.chatId} chatId={member.chatId}  />
             ))}
                         <div className="flex flex-col justify-center items-center pt-40 space-y-2">
                 <MessageSquare className="h-10 w-10" />

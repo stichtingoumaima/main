@@ -62,3 +62,13 @@ export const useSubscriptionStore = create<SubscriptionState>((set) => ({
     subscription: undefined,
     setSubscription: (subscription: Subscription | null) => set({ subscription }),
 }));
+
+interface ActiveChatState {
+    activeChatId: string | null;
+    setActiveChatId: (chatId: string | null) => void;
+}
+
+export const useActiveChatStore = create<ActiveChatState>((set) => ({
+    activeChatId: null,
+    setActiveChatId: (chatId: string | null) => set({ activeChatId: chatId }),
+}));

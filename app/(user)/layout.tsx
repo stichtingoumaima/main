@@ -6,7 +6,7 @@ export default function ChatsLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="cursor-custom">
+        <div className=" cursor-default">
             <BgVideo/>
         
             {children}

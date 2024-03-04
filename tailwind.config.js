@@ -8,6 +8,17 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
 	],
   theme: {
+    cursor: {
+      auto: 'url(/assets/cursor.png), pointer ',
+      default: 'url(/assets/cursor.png), pointer ',
+      pointer: 'url(/assets/cursor.png), pointer ',
+     wait: 'url(/assets/cursor.png), pointer ',
+      text: 'url(/assets/cursor.png), pointer ',
+     move: 'url(/assets/cursor.png), pointer ',
+      'not-allowed': 'url(/assets/cursor.png), pointer ',
+     crosshair: 'url(/assets/cursor.png), pointer ',
+     'zoom-in': 'url(/assets/cursor.png), pointer ',
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -20,7 +31,7 @@ module.exports = {
         'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
       },
       cursor: {
-        'custom': 'url(/assets/cursor.png), pointer', // replace with the actual path to your image
+        'custom': 'url(/assets/cursor.png), pointer ', // replace with the actual path to your image
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

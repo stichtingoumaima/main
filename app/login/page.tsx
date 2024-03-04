@@ -54,13 +54,13 @@ export default function LoginPage() {
   const LoginForm = ({ showLogin }) => {
 
   return (
-    <section className="relative cursor-custom flex justify-center items-center h-screen overflow-hidden">
+    <section className="relative flex justify-center items-center h-screen overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-5"></div>
         <Card className={`transform transition-all duration-700 ease-out w-2/3 p-5 bg-black bg-opacity-30 backdrop-blur-md border border-gray-700 shadow-xl rounded-lg ${showLogin ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ maxWidth: '600px' }}>
           <CardHeader className="text-center space-y-4">
             <CardTitle className="text-4xl md:text-5xl text-white font-bold tracking-wide">IRLQUEST.AI</CardTitle>
             <div className="flex flex-col md:flex-row gap-2">
-              <Button className="bg-white hover:bg-blue-500 text-black rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 w-full">
+              <Button className="hover:cursor-custom bg-white hover:bg-blue-500 text-black rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 w-full">
                 <EnvelopeOpenIcon onClick={() => signIn("google", { callbackUrl: "/login" })} className="mr-2 h-4 w-4" /> Login with Gmail
               </Button>
               <Button className="bg-white hover:bg-indigo-600 text-black rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 w-full">

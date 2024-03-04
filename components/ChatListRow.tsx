@@ -6,12 +6,16 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import UserAvatar from "@/components/UserAvatar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useLanguageStore } from "@/store/store";
+import { useActiveChatStore, useLanguageStore } from "@/store/store";
 
 function ChatListRow({ chatId }: { chatId: string }) {
     const [messages, loading, error] = useCollectionData<Message>(
         limitedSortedMessagesRef(chatId)
     );
+
+    const { activeChatId, setActiveChatId } = useActiveChatStore();
+    const isActive = chatId === activeChatId;
+    
     const language = useLanguageStore((state) => state.language);
     const { data: session } = useSession();
     const router = useRouter();
@@ -23,10 +27,13 @@ function ChatListRow({ chatId }: { chatId: string }) {
     const row = (message?: Message) => (
         <div
             key={chatId}
-            onClick={() => router.push(`/chat/${chatId}`)}
-            className=" dark:bg-[#424956] py-[2px]  "
+            onClick={() => {
+                setActiveChatId(chatId);
+                router.push(`/chat/${chatId}`);
+            }}
+            className=" dark:bg-[#252736] py-[2px]  "
         >
-            <div className="flex items-center space-x-2 cursor-pointer border-[3px] dark:bg-[#414856] p-2 border-y-[#565C6A] border-r-[#565C6A] border-l-[#414856]">
+            <div className={`flex items-center space-x-2 cursor-pointer border-[3px]  ${isActive ? "dark:bg-[#414856] p-2 border-y-[#565C6A] border-r-[#565C6A] border-l-[#414856]" : ""} `}>
 
             
             <UserAvatar
