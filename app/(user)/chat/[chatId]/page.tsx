@@ -31,16 +31,16 @@ async function ChatPage({ params: { chatId } }: Props) {
 
   return (
     <>
-      <BgVideo></BgVideo>
-      <div className="bg-gray-900 bg-opacity-20 w-full flex flex-row h-screen ">
+  
+      <div className="w-full flex flex-row h-screen  ">
         {" "}
         {/* Change background to dark */}
-        <div className="w-1/6 bg-slate-900 bg-opacity-20 overflow-auto border-zinc-600 border-x-2 ">
+        <div className="w-1/6 overflow-auto border-zinc-600 border-x-2 bg-[#212436] bg-opacity-90 ">
           {" "}
           {/* Adjust width and set background to sidebar color */}
           <ChatList></ChatList>
         </div>
-        <div className="flex flex-col w-4/6">
+        <div className="flex flex-col w-4/6 bg-[#212436] bg-opacity-70">
           {" "}
           {/* Adjust width */}
           <AdminControls chatId={chatId} />

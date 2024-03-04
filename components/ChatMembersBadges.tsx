@@ -18,7 +18,7 @@ function ChatMembersBadges({ chatId }: { chatId: string }) {
 
     return (
         !loading && (
-            <div className="p-2 border rounded-xl m-5">
+            <div className="p-2 border-b-2 border-[#2828285e]  rounded-xl m-5">
                 <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 p-2">
                     {members?.map((member) => (
                         <Badge

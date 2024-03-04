@@ -24,8 +24,11 @@ function ChatListRow({ chatId }: { chatId: string }) {
         <div
             key={chatId}
             onClick={() => router.push(`/chat/${chatId}`)}
-            className="flex p-5 items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700"
+            className=" dark:bg-[#424956] py-[2px]  "
         >
+            <div className="flex items-center space-x-2 cursor-pointer border-[3px] dark:bg-[#414856] p-2 border-y-[#565C6A] border-r-[#565C6A] border-l-[#414856]">
+
+            
             <UserAvatar
                 name={message?.user.name || session?.user.name}
                 image={message?.user.image || session?.user.image}
@@ -35,7 +38,7 @@ function ChatListRow({ chatId }: { chatId: string }) {
                     {!message && "New Chat"}
                     {message && [message?.user.name || session?.user.name].toString().split(" ")[0]}
                 </p>
-
+q
                 <p className="text-gray-400 line-clamp-1">
                     {message?.translated?.[language] || "Get the conversation started..."}
                 </p>
@@ -48,6 +51,7 @@ function ChatListRow({ chatId }: { chatId: string }) {
                         : "No messages yet"}
                 </p>
                 <p className="">chat #{prettyUUID()}</p>
+            </div>
             </div>
         </div>
     );

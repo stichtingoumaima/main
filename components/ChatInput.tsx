@@ -98,13 +98,13 @@ function ChatInput({ chatId }: { chatId: string }) {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex space-x-2 py-5  max-2-4xl mx-auto bg-white border dark:bg-slate-800 bg-opacity-25 "
+                    className="flex space-x-2 py-5  max-2-4xl mx-auto  p-16 border-[#00000048]"
                 >
                     <FormField
                         control={form.control}
                         name="input"
                         render={({ field }) => (
-                            <FormItem className="flex-1  bg-transparent focus:bg-white border-2 border-zinc-700 w-4/6 h-full rounded-full transition duration-300 ease-in-out" >
+                            <FormItem className="flex-1  bg-transparent focus:bg-white border-2 border-zinc-600 opacity-75 w-4/6 h-full rounded-full transition duration-300 ease-in-out" >
                                 <FormControl>
                                     <Input
                                         className="border-none bg-transparent focus:bg-white border-2 rounded-full text-black dark:placeholder:text-gray-300 font-semibold h-12 text-3xl text-center"
