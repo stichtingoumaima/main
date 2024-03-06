@@ -1,9 +1,9 @@
 import { db } from "@/firebase";
-import { collection, doc, getDoc, setDoc, writeBatch } from "firebase/firestore";
+import { collection, doc, getDoc, runTransaction, setDoc, writeBatch } from "firebase/firestore";
 // Assuming mainSkillsData includes predefined subskills for simplicity
 const mainSkillsData = [
   {
-    name: "Mind Mastery",
+    name: "Strength",
     subskills: [
       "Critical Thinking",
       "Problem Solving",
@@ -12,11 +12,11 @@ const mainSkillsData = [
     ],
   },
   {
-    name: "Physical Prowess",
-    subskills: ["Endurance", "Strength", "Flexibility", "Balance", "Speed"],
+    name: "Stamina",
+    subskills: ["Endurance", "Flexibility", "Balance", "Speed"],
   },
   {
-    name: "Technological Fluency",
+    name: "Technology",
     subskills: [
       "Coding",
       "Cybersecurity",
@@ -26,7 +26,7 @@ const mainSkillsData = [
     ],
   },
   {
-    name: "Craftsman's Touch",
+    name: "Crafting",
     subskills: [
       "Woodworking",
       "Metalworking",
@@ -36,7 +36,7 @@ const mainSkillsData = [
     ],
   },
   {
-    name: "Social Navigator",
+    name: "Speech",
     subskills: [
       "Public Speaking",
       "Empathy",
@@ -46,7 +46,7 @@ const mainSkillsData = [
     ],
   },
   {
-    name: "Truth Seeker",
+    name: "Health",
     subskills: [
       "Research",
       "Philosophy",
@@ -58,41 +58,49 @@ const mainSkillsData = [
 ];
 export const initializePlayerData = async (userId: string) => {
   const playerDocRef = doc(db, "players", userId);
-  const playerDocSnapshot = await getDoc(playerDocRef);
 
-  if (playerDocSnapshot.exists()) {
-    console.log("Player data already exists for this user.");
-    return;
-  }
+  try {
+    await runTransaction(db, async (transaction) => {
+      const playerDoc = await transaction.get(playerDocRef);
+      
+      // Check if the player data already exists
+      if (playerDoc.exists()) {
+        console.log("Player data already exists for this user.");
+        return; // Exit if player data already exists
+      }
 
-  const batch = writeBatch(db);
-  batch.set(playerDocRef, {
-    uid: userId,
-    totalXP: 0,
-    lifeSkillLevel: 1,
-  });
+      // Player data does not exist, proceed to initialize
+      transaction.set(playerDocRef, {
+        uid: userId,
+        totalXP: 0,
+        lifeSkillLevel: 1,
+      });
 
-  mainSkillsData.forEach((mainSkill) => {
-    // Generate a deterministic document ID for each MainSkill based on its name
-    const mainSkillId = mainSkill.name.replace(/\s+/g, '_').toLowerCase();
-    const mainSkillDocRef = doc(db, `players/${userId}/mainSkills`, mainSkillId);
-    batch.set(mainSkillDocRef, {
-      name: mainSkill.name,
-      xp: 0,
-      level: 1,
-    });
+      mainSkillsData.forEach((mainSkill) => {
+        const mainSkillId = mainSkill.name.replace(/\s+/g, '_').toLowerCase();
+        const mainSkillDocRef = doc(db, `players/${userId}/mainSkills`);
 
-    mainSkill.subskills.forEach((subskillName, index) => {
-      // For subskills, you could continue to use auto-generated IDs, or use a similar approach for deterministic IDs
-      const subskillDocRef = doc(collection(mainSkillDocRef, "subskills"));
-      batch.set(subskillDocRef, {
-        name: subskillName,
-        xp: 0,
-        level: 1,
+        transaction.set(mainSkillDocRef, {
+          name: mainSkill.name,
+          xp: 0,
+          level: 1,
+        });
+
+        mainSkill.subskills.forEach((subskillName) => {
+          const subskillId = subskillName.replace(/\s+/g, '_').toLowerCase();
+          const subskillDocRef = doc(collection(mainSkillDocRef, "subskills"));
+          
+          transaction.set(subskillDocRef, {
+            name: subskillName,
+            xp: 0,
+            level: 1,
+          });
+        });
       });
     });
-  });
 
-  await batch.commit();
-  console.log("Initial player data created successfully.");
+    console.log("Initial player data created successfully.");
+  } catch (e) {
+    console.error("Transaction failed: ", e);
+  }
 };

@@ -49,7 +49,7 @@ export default function LoginPage() {
         // Initialize Player and their game data if new
         initializePlayerData(session.user.id);
       }
-    }, [session]);
+    }, [session?.user.id]);
     return (
       <div className="cursor-custom flex justify-center items-center h-screen bg-cover bg-center relative" style={{ backgroundImage: 'url(/your-background-image.jpg)' }}>
         <div className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

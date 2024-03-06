@@ -4,7 +4,7 @@ import ChatInput from "@/components/ChatInput";
 import ChatList from "@/components/ChatList";
 import ChatMembersBadges from "@/components/ChatMembersBadges";
 import ChatMessages from "@/components/ChatMessages";
-import SkillsOverview from "@/components/SkillsOverview";
+import PlayerSkillsPanel from "@/components/PlayerSkillsPanel";
 import { chatMembersRef } from "@/lib/converters/ChatMembers";
 import { sortedMessagesRef } from "@/lib/converters/Message";
 import { getDocs } from "firebase/firestore";
@@ -57,7 +57,7 @@ async function ChatPage({ params: { chatId } }: Props) {
           <ChatInput chatId={chatId} />
         </div>
         {/* Right side panel*/}
-        <SkillsOverview userId={session?.user.id} />
+        {session?.user.id && <PlayerSkillsPanel userId={session.user.id} />}
 
       </div>
     </>
