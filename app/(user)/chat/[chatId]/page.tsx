@@ -1,10 +1,10 @@
 import { authOptions } from "@/auth";
 import AdminControls from "@/components/AdminControls";
-import BgVideo from "@/components/BgVideo";
 import ChatInput from "@/components/ChatInput";
 import ChatList from "@/components/ChatList";
 import ChatMembersBadges from "@/components/ChatMembersBadges";
 import ChatMessages from "@/components/ChatMessages";
+import SkillsOverview from "@/components/SkillsOverview";
 import { chatMembersRef } from "@/lib/converters/ChatMembers";
 import { sortedMessagesRef } from "@/lib/converters/Message";
 import { getDocs } from "firebase/firestore";
@@ -57,141 +57,8 @@ async function ChatPage({ params: { chatId } }: Props) {
           <ChatInput chatId={chatId} />
         </div>
         {/* Right side panel*/}
-<div className="flex flex-col w-1/6 h-screen bg-slate-900 text-white overflow-y-auto">
-  <div className="p-4 space-y-4">
-    {/* Mind Mastery */}
-    <div className="group bg-green-800 p-2 rounded-lg shadow-md">
-      <p className="text-xl font-bold">Mind Mastery - Level 1</p>
-      <div className="space-y-2 bg-gray-900 p-2 rounded-lg">
-        <p className="text-lg font-semibold">Subskills</p>
-        <div className="space-y-1">
-          <div>
-            <p className="text-sm">Critical Thinking Level 1 - 40%</p>
-            <progress className="progress progress-info w-full" value="40" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Problem Solving - 60%</p>
-            <progress className="progress progress-info w-full" value="60" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Creative Thinking - 25%</p>
-            <progress className="progress progress-info w-full" value="25" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
+        <SkillsOverview userId={session?.user.id} />
 
-    {/* Physical Prowess */}
-    <div className="group bg-neutral-700 p-2 rounded-lg shadow-md">
-      <p className="text-xl font-bold">Physical Prowess - Level 2</p>
-      <div className="space-y-2 bg-gray-900 p-2 rounded-lg">
-        <p className="text-lg font-semibold">Subskills</p>
-        <div className="space-y-1">
-          <div>
-            <p className="text-sm">Endurance  Level 1 75%</p>
-            <progress className="progress progress-info w-full" value="75" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Strength  Level 1 50%</p>
-            <progress className="progress progress-info w-full" value="50" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Agility  Level 1 30%</p>
-            <progress className="progress progress-info w-full" value="30" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Technological Fluency */}
-    <div className="group bg-yellow-800 p-2 rounded-lg shadow-md">
-      <p className="text-xl font-bold">Technological Fluency - Level 3</p>
-      <div className="space-y-2 bg-gray-900 p-2 rounded-lg">
-        <p className="text-lg font-semibold">Subskills</p>
-        <div className="space-y-1">
-          <div>
-            <p className="text-sm">Coding Level 1  90%</p>
-            <progress className="progress progress-info w-full" value="90" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Cybersecurity Level 1  40%</p>
-            <progress className="progress progress-info w-full" value="40" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Data Analysis Level 1  60%</p>
-            <progress className="progress progress-info w-full" value="60" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Craftman's Touch */}
-    <div className="group bg-red-400 p-2 rounded-lg shadow-md">
-      <p className="text-xl font-bold">Craftman's Touch - Level 4</p>
-      <div className="space-y-2 bg-gray-900 p-2 rounded-lg">
-        <p className="text-lg font-semibold">Subskills</p>
-        <div className="space-y-1">
-          <div>
-            <p className="text-sm">Woodworking - 80%</p>
-            <progress className="progress progress-info w-full" value="80" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Metalworking - 70%</p>
-            <progress className="progress progress-info w-full" value="70" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Leatherworking - 50%</p>
-            <progress className="progress progress-info w-full" value="50" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Social Navigator */}
-    <div className="group bg-slate-700 p-2 rounded-lg shadow-md">
-      <p className="text-xl font-bold">Social Navigator - Level 5</p>
-      <div className="space-y-2 bg-gray-900 p-2 rounded-lg">
-        <p className="text-lg font-semibold">Subskills</p>
-        <div className="space-y-1">
-          <div>
-            <p className="text-sm">Public Speaking - 65%</p>
-            <progress className="progress progress-info w-full" value="65" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Empathy - 80%</p>
-            <progress className="progress progress-info w-full" value="80" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Negotiation - 45%</p>
-            <progress className="progress progress-info w-full" value="45" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Truth Seeker */}
-    <div className="group bg-orange-800 p-2 rounded-lg shadow-md">
-      <p className="text-xl font-bold">Truth Seeker - Level 6</p>
-      <div className="space-y-2 bg-gray-900 p-2 rounded-lg">
-        <p className="text-lg font-semibold">Subskills</p>
-        <div className="space-y-1">
-          <div>
-            <p className="text-sm">Research - 85%</p>
-            <progress className="progress progress-info w-full" value="85" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Analysis - 75%</p>
-            <progress className="progress progress-info w-full" value="75" max="100"></progress>
-          </div>
-          <div>
-            <p className="text-sm">Logic - 90%</p>
-            <progress className="progress progress-info w-full" value="90" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
       </div>
     </>
   );
