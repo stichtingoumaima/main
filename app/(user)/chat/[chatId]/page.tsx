@@ -66,7 +66,7 @@ async function ChatPage({ params: { chatId } }: Props) {
         <p className="text-lg font-semibold">Subskills</p>
         <div className="space-y-1">
           <div>
-            <p className="text-sm">Critical Thinking - 40%</p>
+            <p className="text-sm">Critical Thinking Level 1 - 40%</p>
             <progress className="progress progress-info w-full" value="40" max="100"></progress>
           </div>
           <div>
@@ -88,15 +88,15 @@ async function ChatPage({ params: { chatId } }: Props) {
         <p className="text-lg font-semibold">Subskills</p>
         <div className="space-y-1">
           <div>
-            <p className="text-sm">Endurance - 75%</p>
+            <p className="text-sm">Endurance  Level 1 75%</p>
             <progress className="progress progress-info w-full" value="75" max="100"></progress>
           </div>
           <div>
-            <p className="text-sm">Strength - 50%</p>
+            <p className="text-sm">Strength  Level 1 50%</p>
             <progress className="progress progress-info w-full" value="50" max="100"></progress>
           </div>
           <div>
-            <p className="text-sm">Agility - 30%</p>
+            <p className="text-sm">Agility  Level 1 30%</p>
             <progress className="progress progress-info w-full" value="30" max="100"></progress>
           </div>
         </div>
@@ -110,15 +110,15 @@ async function ChatPage({ params: { chatId } }: Props) {
         <p className="text-lg font-semibold">Subskills</p>
         <div className="space-y-1">
           <div>
-            <p className="text-sm">Coding - 90%</p>
+            <p className="text-sm">Coding Level 1  90%</p>
             <progress className="progress progress-info w-full" value="90" max="100"></progress>
           </div>
           <div>
-            <p className="text-sm">Cybersecurity - 40%</p>
+            <p className="text-sm">Cybersecurity Level 1  40%</p>
             <progress className="progress progress-info w-full" value="40" max="100"></progress>
           </div>
           <div>
-            <p className="text-sm">Data Analysis - 60%</p>
+            <p className="text-sm">Data Analysis Level 1  60%</p>
             <progress className="progress progress-info w-full" value="60" max="100"></progress>
           </div>
         </div>

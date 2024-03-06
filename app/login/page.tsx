@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Input } from '@/components/ui/input';
 import { EnvelopeOpenIcon } from '@radix-ui/react-icons';
 import { signIn, useSession } from 'next-auth/react';
+import { initializePlayerData } from '@/lib/services/initializeGame';
 
 export default function LoginPage() {
     const { data: session } = useSession();
@@ -41,6 +42,14 @@ export default function LoginPage() {
     );
   };
   const StartGameScreen = () => {
+    const { data: session } = useSession();
+
+    useEffect(() => {
+      if (session?.user?.id) {
+        // Initialize Player and their game data if new
+        initializePlayerData(session.user.id);
+      }
+    }, [session]);
     return (
       <div className="cursor-custom flex justify-center items-center h-screen bg-cover bg-center relative" style={{ backgroundImage: 'url(/your-background-image.jpg)' }}>
         <div className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
