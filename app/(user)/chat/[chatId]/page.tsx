@@ -57,7 +57,7 @@ async function ChatPage({ params: { chatId } }: Props) {
           <ChatInput chatId={chatId} />
         </div>
         {/* Right side panel*/}
-        {session?.user.id && <PlayerSkillsPanel userId={session.user.id} />}
+        {session?.user.id && <PlayerSkillsPanel  userId={session.user.id} />}
 
       </div>
     </>

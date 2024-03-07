@@ -78,7 +78,7 @@ export const initializePlayerData = async (userId: string) => {
 
       mainSkillsData.forEach((mainSkill) => {
         const mainSkillId = mainSkill.name.replace(/\s+/g, '_').toLowerCase();
-        const mainSkillDocRef = doc(db, `players/${userId}/mainSkills`);
+        const mainSkillDocRef = doc(db, `players/${userId}/mainSkills`, mainSkillId);
 
         transaction.set(mainSkillDocRef, {
           name: mainSkill.name,
