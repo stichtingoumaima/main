@@ -1,10 +1,10 @@
 import { authOptions } from "@/auth";
-import AdminControls from "@/components/AdminControls";
-import ChatInput from "@/components/ChatInput";
-import ChatList from "@/components/ChatList";
-import ChatMembersBadges from "@/components/ChatMembersBadges";
-import ChatMessages from "@/components/ChatMessages";
-import PlayerSkillsPanel from "@/components/PlayerSkillsPanel";
+import AdminControls from "@/components/chat/AdminControls";
+import ChatInput from "@/components/chat/ChatInput";
+import ChatList from "@/components/chat/ChatList";
+import ChatMembersBadges from "@/components/chat/ChatMembersBadges";
+import ChatMessages from "@/components/chat/ChatMessages";
+import PlayerSkillsPanel from "@/components/chat/PlayerSkillsPanel";
 import { chatMembersRef } from "@/lib/converters/ChatMembers";
 import { sortedMessagesRef } from "@/lib/converters/Message";
 import { getDocs } from "firebase/firestore";

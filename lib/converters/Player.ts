@@ -9,6 +9,7 @@ import {
     updateDoc,
     getDoc,
     increment,
+    collection,
   } from "firebase/firestore";
   import { db } from "@/firebase"; // Adjust the import path as per your project structure
   
@@ -48,7 +49,13 @@ import {
       // Additional logic for updating lifeSkillLevel based on new totalXP can be added here
     });
   }
-  export const playerRef = (uid: string) => doc(db, "players", uid).withConverter(playerConverter);
+  export const playerRef = (userId: string) =>
+  doc(db, "players", userId).withConverter(playerConverter);
 
+// Assuming there's a need for a collection reference for players, though typically you would access individual player documents.
+export const playersCollectionRef = () =>
+  collection(db, "players").withConverter(playerConverter);
   // Ensure to export the Player interface if it needs to be used elsewhere
   export type { Player };
+
+  

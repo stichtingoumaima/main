@@ -1,5 +1,5 @@
 import { authOptions } from "@/auth"
-import PricingCards from "@/components/PricingCards";
+import PricingCards from "@/components/subscription/PricingCards";
 import { getServerSession } from "next-auth";
 
 async function Register() {

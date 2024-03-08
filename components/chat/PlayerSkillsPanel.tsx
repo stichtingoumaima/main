@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import { db } from "@/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -14,42 +14,54 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
   useEffect(() => {
     const playerMainSkillsRef = collection(db, `players/${userId}/mainSkills`);
 
-    const unsubscribe = onSnapshot(playerMainSkillsRef, (mainSkillsSnap) => {
-      const mainSkillsData = mainSkillsSnap.docs.map(async (doc) => {
-        const mainSkillData = doc.data() as Omit<MainSkill, 'subskills'>;
-        const subskillsRef = collection(doc.ref, "subskills");
-
-        const subskills: Subskill[] = await new Promise((resolve) => {
-          onSnapshot(subskillsRef, (subskillsSnap) => {
-            resolve(subskillsSnap.docs.map((doc) => {
-              const subskillData = doc.data() as Subskill;
-              return { ...subskillData, xp: (subskillData.xp / 1000) * 100 };
-            }));
-          });
-        });
-
-        return { ...mainSkillData, subskills, id: doc.id };
+    const unsubscribe = onSnapshot(playerMainSkillsRef, (snapshot) => {
+      const skills = snapshot.docs.map(doc => {
+        const skillData = doc.data() as Omit<MainSkill, 'subskills'>;
+        return { ...skillData, id: doc.id, subskills: [] }; // Initialize subskills array for later update
       });
-
-      Promise.all(mainSkillsData).then(setMainSkills);
+      setMainSkills(skills);
     });
 
     return () => unsubscribe();
   }, [userId]);
 
+  useEffect(() => {
+    // Separate subscriptions for each main skill's subskills to optimize
+    mainSkills.forEach(mainSkill => {
+      const subskillsRef = collection(db, `players/${userId}/mainSkills/${mainSkill.id}/subskills`);
+      const unsubscribe = onSnapshot(subskillsRef, (snapshot) => {
+        const subskills = snapshot.docs.map(doc => doc.data() as Subskill);
+        // Update the specific mainSkill with new subskills data
+        setMainSkills(currentSkills => currentSkills.map(skill => skill.id === mainSkill.id ? { ...skill, subskills } : skill));
+      });
+      return () => unsubscribe();
+    });
+  }, [mainSkills, userId]); // Note: This effect depends on mainSkills, may need optimization to avoid unnecessary subscriptions
+
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
+    },
   };
 
   const itemVariants = {
     hidden: { x: -10, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { type: 'spring', stiffness: 100, damping: 10 } },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100, damping: 10 },
+    },
   };
 
   const progressBarVariants = {
     initial: { width: 0 },
-    animate: (xp: number) => ({ width: `${xp}%`, transition: { duration: 1, ease: "easeInOut" } }),
+    animate: (xp: number) => ({
+      width: `${xp}%`,
+      transition: { duration: 1, ease: "easeInOut" },
+    }),
   };
 
   return (
@@ -79,10 +91,16 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
             <motion.div className="mt-4">
               <p className="text-lg font-semibold mb-2">Subskills</p>
               {mainSkill.subskills.map((subskill, subIndex) => (
-                <motion.div key={subskill.id} className="mt-3" variants={itemVariants}>
+                <motion.div
+                  key={subskill.id}
+                  className="mt-3"
+                  variants={itemVariants}
+                >
                   <div className="flex justify-between items-center">
                     <div className="text-sm font-medium">{subskill.name}</div>
-                    <div className="text-xs font-light text-gray-300">Lvl {subskill.level}</div>
+                    <div className="text-xs font-light text-gray-300">
+                      Lvl {subskill.level}
+                    </div>
                   </div>
                   <div className="w-full bg-gray-600 rounded-full h-2 dark:bg-gray-700 mt-2 overflow-hidden">
                     <motion.div

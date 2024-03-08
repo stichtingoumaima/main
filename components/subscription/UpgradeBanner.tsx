@@ -2,7 +2,7 @@
 
 import { useSubscriptionStore } from "@/store/store"
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 function UpgradeBanner() {
     const subscription = useSubscriptionStore((state) => state.subscription);

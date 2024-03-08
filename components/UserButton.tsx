@@ -15,7 +15,7 @@ import { signIn, signOut } from "next-auth/react"
 import { useSubscriptionStore } from "@/store/store"
 import LoadingSpinner from "./LoadingSpinner"
 import { StarIcon } from "lucide-react"
-import ManageAccountButton from "./ManageAccountButton"
+import ManageAccountButton from "./subscription/ManageAccountButton"
 
 
 function UserButton({ session }: { session: Session | null }) {

@@ -1,4 +1,4 @@
-import PricingCards from "@/components/PricingCards";
+import PricingCards from "@/components/subscription/PricingCards";
 
 function PricingPage() {
     return (

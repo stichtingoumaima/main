@@ -1,13 +1,13 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/auth";
-import DarkModeToggle from "./DarkModeToggle";
-import Logo from "./Logo";
-import UserButton from "./UserButton";
+import DarkModeToggle from "../DarkModeToggle";
+import Logo from "../Logo";
+import UserButton from "../UserButton";
 import Link from "next/link";
 import { MessagesSquareIcon } from "lucide-react"
-import CreateChatButton from "./CreateChatButton";
-import UpgradeBanner from "./UpgradeBanner";
-import LanguageSelect from "./LanguageSelect";
+import CreateChatButton from "../chat/CreateChatButton";
+import UpgradeBanner from "../subscription/UpgradeBanner";
+import LanguageSelect from "../LanguageSelect";
 
 // const routeList: RouteProps[] = [
 //     {

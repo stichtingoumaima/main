@@ -32,7 +32,7 @@ import useAdminId from "@/hooks/useAdminId";
 import { PlusCircleIcon } from "lucide-react";
 //import { ShareLink } from "./ShareLink";
 import { useSubscriptionStore } from "@/store/store";
-import { ToastAction } from "./ui/toast";
+import { ToastAction } from "../ui/toast";
 import { useRouter } from "next/navigation";
 import ShareLink from "./ShareLink";
 

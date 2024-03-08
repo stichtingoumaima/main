@@ -88,7 +88,7 @@ export const initializePlayerData = async (userId: string) => {
 
         mainSkill.subskills.forEach((subskillName) => {
           const subskillId = subskillName.replace(/\s+/g, '_').toLowerCase();
-          const subskillDocRef = doc(collection(mainSkillDocRef, "subskills"));
+          const subskillDocRef = doc(collection(mainSkillDocRef, "subskills"), subskillId);
           
           transaction.set(subskillDocRef, {
             name: subskillName,

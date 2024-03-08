@@ -6,6 +6,8 @@ import {
   SnapshotOptions,
   doc,
   collection,
+  where,
+  query,
 } from "firebase/firestore";
 
 export interface MainSkill {
@@ -39,7 +41,11 @@ const mainSkillConverter: FirestoreDataConverter<MainSkill> = {
   },
 };
 
-export const mainSkillRef = (playerId: string, mainSkillId?: string) => {
-  // Optionally accepts a mainSkillId to reference specific documents
-  return doc(collection(db, `players/${playerId}/mainSkills`), mainSkillId).withConverter(mainSkillConverter);
-};
+export const mainSkillRef = (userId: string, mainSkillId: string) =>
+    doc(db, "players", userId, "mainSkills", mainSkillId).withConverter(mainSkillConverter);
+
+export const mainSkillsCollectionRef = (userId: string) =>
+    collection(db, "players", userId, "mainSkills").withConverter(mainSkillConverter);
+
+export const mainSkillsByNameRef = (userId: string, name: string) =>
+    query(collection(db, "players", userId, "mainSkills"), where("name", "==", name)).withConverter(mainSkillConverter);

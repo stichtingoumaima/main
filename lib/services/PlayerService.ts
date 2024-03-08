@@ -7,7 +7,7 @@ import {
   getDocs,
   limit,
   increment,
-  QueryDocumentSnapshot,
+
 } from "firebase/firestore";
 import { Subskill } from "../converters/Subskill";
 import { MainSkill } from "../converters/MainSkill";

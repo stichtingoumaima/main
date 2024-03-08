@@ -3,9 +3,9 @@
 import useAdminId from "@/hooks/useAdminId";
 import { ChatMembers, chatMembersRef } from "@/lib/converters/ChatMembers";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import LoadingSpinner from "./LoadingSpinner";
-import { Badge } from "./ui/badge";
-import UserAvatar from "./UserAvatar";
+import LoadingSpinner from "../LoadingSpinner";
+import { Badge } from "../ui/badge";
+import UserAvatar from "../UserAvatar";
 
 function ChatMembersBadges({ chatId }: { chatId: string }) {
     const [members, loading, error] = useCollectionData<ChatMembers>(

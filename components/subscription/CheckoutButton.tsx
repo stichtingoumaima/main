@@ -4,7 +4,7 @@ import { db } from "@/firebase";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { useState } from "react"
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 import { useSubscriptionStore } from "@/store/store";
 import ManageAccountButton from "./ManageAccountButton";
 

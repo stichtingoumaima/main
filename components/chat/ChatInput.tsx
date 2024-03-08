@@ -24,7 +24,7 @@ import {
 } from "@/lib/converters/Message";
 import { useRouter } from "next/navigation";
 import { useSubscriptionStore } from "@/store/store";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "../ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { db } from "@/firebase";
 import { addXpToFirstSubskillAndUpdateLifeSkill } from "@/lib/services/PlayerService";

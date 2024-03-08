@@ -6,8 +6,8 @@ import { Session } from "next-auth";
 import { createRef, useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { MessageCircleIcon } from "lucide-react";
-import UserAvatar from "./UserAvatar";
-import LoadingSpinner from "./LoadingSpinner";
+import UserAvatar from "../UserAvatar";
+import LoadingSpinner from "../LoadingSpinner";
 
 function ChatMessages({
   chatId,

@@ -6,6 +6,8 @@ import {
   doc,
   collection,
   DocumentReference,
+  where,
+  query,
 } from "firebase/firestore";
 import { db } from "@/firebase";
 
@@ -28,13 +30,13 @@ export const subskillConverter: FirestoreDataConverter<Subskill> = {
   },
   fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Subskill {
     const data = snapshot.data(options);
+  
     if (!data.mainSkillRef || typeof data.mainSkillRef !== 'string') {
+      // If mainSkillRef is not available or not a string, you may want to handle this error appropriately
+      console.error("mainSkillRef is missing or not a string in the document with id:", snapshot.id);
       throw new Error("mainSkillRef is missing or invalid in the subskill document");
     }
-    // Additional checks for other fields can be added here as needed.
-    if (typeof data.name !== 'string' || typeof data.xp !== 'number' || typeof data.level !== 'number') {
-      throw new Error("One or more fields are missing or invalid in the subskill document");
-    }
+  
     return {
       id: snapshot.id,
       mainSkillRef: data.mainSkillRef, // This is already expected to be a string.
@@ -45,8 +47,11 @@ export const subskillConverter: FirestoreDataConverter<Subskill> = {
   },
 };
 
-export const subskillRef = (mainSkillId: string, subskillId?: string) => {
-  // When subskillId is provided, it creates a reference to an existing document.
-  // When subskillId is not provided, it implies creating a new document with an auto-generated ID.
-  return doc(collection(db, `mainSkills/${mainSkillId}/subskills`), subskillId).withConverter(subskillConverter);
-};
+export const subskillRef = (userId: string, mainSkillId: string, subskillId: string) =>
+    doc(db, "players", userId, "mainSkills", mainSkillId, "subskills", subskillId).withConverter(subskillConverter);
+
+export const subskillsCollectionRef = (userId: string, mainSkillId: string) =>
+    collection(db, "players", userId, "mainSkills", mainSkillId, "subskills").withConverter(subskillConverter);
+
+export const subskillsByLevelRef = (userId: string, mainSkillId: string, level: number) =>
+    query(collection(db, "players", userId, "mainSkills", mainSkillId, "subskills"), where("level", "==", level)).withConverter(subskillConverter);
