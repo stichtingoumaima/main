@@ -3,56 +3,9 @@ import { collection, doc, getDoc, runTransaction, setDoc, writeBatch } from "fir
 // Assuming mainSkillsData includes predefined subskills for simplicity
 const mainSkillsData = [
   {
-    name: "Strength",
+    name: "Life Skill",
     subskills: [
-      "Critical Thinking",
-      "Problem Solving",
-      "Learning Agility",
-      "Memory",
-    ],
-  },
-  {
-    name: "Stamina",
-    subskills: ["Endurance", "Flexibility", "Balance", "Speed"],
-  },
-  {
-    name: "Technology",
-    subskills: [
-      "Coding",
-      "Cybersecurity",
-      "Data Analysis",
-      "Tech Literacy",
-      "Digital Collaboration",
-    ],
-  },
-  {
-    name: "Crafting",
-    subskills: [
-      "Woodworking",
-      "Metalworking",
-      "Painting",
-      "Sculpting",
-      "Drawing",
-    ],
-  },
-  {
-    name: "Speech",
-    subskills: [
-      "Public Speaking",
-      "Empathy",
-      "Teamwork",
-      "Negotiation",
-      "Networking",
-    ],
-  },
-  {
-    name: "Health",
-    subskills: [
-      "Research",
-      "Philosophy",
-      "Scientific Thinking",
-      "Historical Analysis",
-      "Logical Reasoning",
+      "coding",
     ],
   },
 ];

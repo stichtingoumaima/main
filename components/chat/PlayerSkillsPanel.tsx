@@ -106,7 +106,7 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
                     <motion.div
                       className="bg-blue-500 h-2 rounded-full"
                       variants={progressBarVariants}
-                      custom={subskill.xp}
+                      custom={subskill.xp/10}
                       initial="initial"
                       animate="animate"
                     ></motion.div>

@@ -40,7 +40,7 @@ async function ChatPage({ params: { chatId } }: Props) {
           {/* Adjust width and set background to sidebar color */}
           <ChatList></ChatList>
         </div>
-        <div className="flex flex-col w-4/6 bg-[#212436] bg-opacity-70">
+        <div className="flex flex-col w-4/6 bg-[#212436] backdrop-blur-sm bg-opacity-70">
           {" "}
           {/* Adjust width */}
           <AdminControls chatId={chatId} />

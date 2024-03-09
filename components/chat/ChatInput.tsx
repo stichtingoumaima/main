@@ -26,8 +26,9 @@ import { useRouter } from "next/navigation";
 import { useSubscriptionStore } from "@/store/store";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import { db } from "@/firebase";
 import { addXpToFirstSubskillAndUpdateLifeSkill } from "@/lib/services/PlayerService";
+
+
 
 const formSchema = z.object({
   input: z.string().max(1000),
@@ -110,12 +111,13 @@ function ChatInput({ chatId }: { chatId: string }) {
                 if (responseObj.xp) {
                   // Make sure XP is a number and positive before proceeding
                   const xpToAdd = Number(responseObj.xp);
+                  const skill = responseObj.skill;
                   if (!isNaN(xpToAdd) && xpToAdd > 0) {
-                    await addXpToFirstSubskillAndUpdateLifeSkill(session.user.id, xpToAdd);
+                    await addXpToFirstSubskillAndUpdateLifeSkill(session.user.id,xpToAdd,skill);
                     console.log(`XP added: ${xpToAdd}`);
                     // Here, handle the successful addition of XP as needed
                   }
-                }
+                } 
               } catch (error) {
                 console.error("Error parsing response or adding XP:", error);
                 // Handle any errors, such as JSON parsing errors or issues in adding XP
