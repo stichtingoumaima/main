@@ -1,13 +1,17 @@
 "use client";
 
+import { motion } from 'framer-motion';
 import { Message, sortedMessagesRef } from "@/lib/converters/Message";
 import { useLanguageStore } from "@/store/store";
 import { Session } from "next-auth";
 import { createRef, useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { MessageCircleIcon } from "lucide-react";
+import { MessageCircleIcon, Star } from "lucide-react";
 import UserAvatar from "../UserAvatar";
 import LoadingSpinner from "../LoadingSpinner";
+import AdminControls from "./AdminControls";
+import ChatInput from "./ChatInput";
+import ChatMembersBadges from "./ChatMembersBadges";
 
 function ChatMessages({
   chatId,
@@ -30,65 +34,94 @@ function ChatMessages({
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    console.log(messages);
   }, [messages, messagesEndRef]);
 
-  return (
-    <div className="p-5">
-      {!loading && messages?.length === 0 && (
-        <div className="flex flex-col justify-center text-center items-center p-20 rounded-xl space-y-2 bg-indigo-400 text-white font-extralight ">
-          <MessageCircleIcon className="h-10 w-10" />
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  };
 
-          <h2>
-            <span className="font-bold">Invite a friend</span> &{" "}
-            <span className="font-bold">
-              Send yout first message in ANY language
-            </span>{" "}
-            below to get started!
-          </h2>
-          <p>The AI will auto-detect & translate it all for you</p>
-        </div>
-      )}
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
 
-{messages?.map((message: Message) => {
-  const isSender = message.user.id === session?.user.id;
+  const badgeVariants = {
+    hover: { scale: 1.2, rotate: 15, transition: { yoyo: Infinity, duration: 0.5 } },
+  };
+
   return (
-    <div className={`flex ${isSender ? "justify-end" : ""} mb-4 w-full relative line-clamp-1`} key={message.id}>
-      {/* Avatar */}
-      {!isSender && (
-        <UserAvatar
-          name={message.user.name}
-          image={message.user.image}
-          className="h-[90px] w-[90px] mr-2"
-        />
-      )}
-      {/* Message bubble */}
-      <div className={`flex flex-col ${isSender ? "items-end" : "items-start"} flex-1 min-w-0`}>
-        <p className="text-lg font-semibold mb-1">
-          {message.user.name.split(" ")[0]}
-        </p>
-        <div className={`text-2xl text-[#323232] font-bold bg-[#D8D3C7] rounded-[80px] py-2 px-6 max-w-full ${isSender ? "ml-4" : "mr-4"
-          }`}>
-          <p className="break-words overflow-hidden">{message.translated?.[language] || message.input}</p>
-          {!message.translated && <LoadingSpinner />}
-        </div>
-        <p className="mt-2 text-sm">
-          {message.response}
-          {!message.translated && <LoadingSpinner />}
-        </p>
+    <div className="flex flex-col w-4/6 bg-[#212436] backdrop-blur-sm bg-opacity-50">
+      <AdminControls chatId={chatId} />
+      <ChatMembersBadges chatId={chatId} />
+      <div className="flex-1 overflow-auto">
+        <motion.div
+          className="p-5"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {messages?.map((message: Message) => {
+            const isSender = message.user.id === session?.user.id;
+            return (
+              <motion.div
+                className={`flex ${isSender ? "justify-end" : ""} mb-4 w-full relative`}
+                key={message.id}
+                variants={itemVariants}
+              >
+                {!isSender && (
+                  <motion.div whileHover={{ scale: 1.05 }} className="flex items-center mr-2">
+                    <UserAvatar
+                      name={message.user.name}
+                      image={message.user.image}
+                      className="h-[90px] w-[90px]"
+                    />
+                    <motion.div variants={badgeVariants} whileHover="hover">
+                      <Star className="text-yellow-400 w-6 h-6" />
+                    </motion.div>
+                  </motion.div>
+                )}
+                <div className={`flex flex-col ${isSender ? "items-end" : "items-start"} flex-1 min-w-0`}>
+                  <p className="text-lg font-semibold mb-1">{message.user.name.split(" ")[0]}</p>
+                  <div className={`text-2xl text-[#323232] font-bold bg-[#D8D3C7] rounded-[80px] py-2 px-6 max-w-full ${isSender ? "ml-4" : "mr-4"}`}>
+                    <p className="break-words overflow-hidden">
+                      {message.translated?.[language] || message.input}
+                    </p>
+                    {!message.translated && <LoadingSpinner />}
+                  </div>
+                  <p className="mt-2 text-sm">
+                    {message.response}
+                    {!message.translated && <LoadingSpinner />}
+                  </p>
+                </div>
+                {isSender && (
+                  <motion.div whileHover={{ scale: 1.05 }} className="flex items-center ml-2">
+                    <UserAvatar
+                      name={message.user.name}
+                      image={message.user.image}
+                      className="h-[80px] w-[80px]"
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+            );
+          })}
+          <div ref={messagesEndRef} />
+        </motion.div>
       </div>
-      {/* Avatar */}
-      {isSender && (
-        <UserAvatar
-          name={message.user.name}
-          image={message.user.image}
-          className="h-[80px] w-[80px] ml-2"
-        />
-      )}
-    </div>
-  );
-})}
-<div ref={messagesEndRef} />
+      <ChatInput chatId={chatId} />
     </div>
   );
 }

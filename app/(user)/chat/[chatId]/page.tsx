@@ -40,12 +40,7 @@ async function ChatPage({ params: { chatId } }: Props) {
           {/* Adjust width and set background to sidebar color */}
           <ChatList></ChatList>
         </div>
-        <div className="flex flex-col w-4/6 bg-[#212436] backdrop-blur-sm bg-opacity-70">
-          {" "}
-          {/* Adjust width */}
-          <AdminControls chatId={chatId} />
-          <ChatMembersBadges chatId={chatId} />
-          <div className="flex-1 overflow-auto">
+
             {" "}
             {/* Make sure messages are scrollable */}
             <ChatMessages
@@ -53,9 +48,7 @@ async function ChatPage({ params: { chatId } }: Props) {
               session={session}
               initialMessages={initialMessages}
             />
-          </div>
-          <ChatInput chatId={chatId} />
-        </div>
+
         {/* Right side panel*/}
         {session?.user.id && <PlayerSkillsPanel  userId={session.user.id} />}
 
