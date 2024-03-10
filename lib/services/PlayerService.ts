@@ -1,89 +1,80 @@
 import { db } from "@/firebase";
-import {
-  doc,
-  runTransaction,
-  collection,
-  query,
-  where,
-  getDocs,
-  limit,
-  increment,
-  writeBatch
-} from "firebase/firestore";
-import { MainSkill } from "../converters/MainSkill";
-import { Player } from "../converters/Player";
-import { Subskill } from "../converters/Subskill";
+import { lifeSkillsByNameRef, lifeSkillRef } from "../converters/LifeSkill";
+import { playerRef, Player } from "../converters/Player";
+import { doc, setDoc, getDoc, getDocs, increment, updateDoc, writeBatch } from "firebase/firestore";
 
-export const addXpToFirstSubskillAndUpdateLifeSkill = async (userId: string, xpToAdd: number, skillName?: string): Promise<void> => {
-  const playerRef = doc(db, "players", userId);
-  const mainSkillsQuery = query(collection(db, `players/${userId}/mainSkills`), limit(1));
-  const mainSkillsSnap = await getDocs(mainSkillsQuery);
+const XP_THRESHOLD_PER_LEVEL = 1000;
 
-  if (mainSkillsSnap.empty) {
-    throw new Error("No main skills found for this user.");
-  }
+export class SkillService {
+  static async addXpToLifeSkill(userId: string, xpToAdd: number, skillName: string): Promise<void> {
+    const sanitizedSkillName = skillName.trim().toLowerCase();
 
-  const firstMainSkillRef = mainSkillsSnap.docs[0].ref;
-  const subskillsQuery = skillName
-    ? query(collection(firstMainSkillRef, "subskills"), where("name", "==", skillName), limit(1))
-    : query(collection(firstMainSkillRef, "subskills"), limit(1));
+    const skillQuery = lifeSkillsByNameRef(userId, sanitizedSkillName);
+    const querySnapshot = await getDocs(skillQuery);
 
-  const subSkillsSnap = await getDocs(subskillsQuery);
+    // Start a write batch for atomic operations
+    const batch = writeBatch(db);
 
-  let subSkillRef = doc(collection(firstMainSkillRef, "subskills"));
-  let isNewSubSkill = true;
-  let newSubSkillXp = xpToAdd;
-
-  // If skillName is provided and found, use it. Otherwise, create a new subskill
-  if (!subSkillsSnap.empty) {
-    subSkillRef = subSkillsSnap.docs[0].ref;
-    isNewSubSkill = false;
-    const subSkillDoc = await getDocs(query(collection(firstMainSkillRef, "subskills"), where("name", "==", skillName), limit(1)));
-    const subSkillData = subSkillDoc.docs[0].data() as Subskill;
-    newSubSkillXp += subSkillData.xp;
-  }
-
-  await runTransaction(db, async (transaction) => {
-    const firstMainSkillDoc = await transaction.get(firstMainSkillRef);
-    const playerDoc = await transaction.get(playerRef);
-
-    // Calculate level ups
-    let subSkillLevelUps = Math.floor(newSubSkillXp / 1000);
-    newSubSkillXp %= 1000;
-
-    // Write the new or updated subskill
-    if (isNewSubSkill) {
-      transaction.set(subSkillRef, {
-        name: skillName || 'New Skill',
-        xp: newSubSkillXp,
-        level: subSkillLevelUps + 1, // Level starts at 1 and increments with level-ups
-        mainSkillRef: firstMainSkillRef.path
+    if (querySnapshot.empty) {
+      // Life skill does not exist, create a new one
+      const newSkillRef = doc(db, `players/${userId}/lifeSkills`, sanitizedSkillName); // Create a document with a sanitized name as ID
+      const initialLevel = Math.floor(xpToAdd / XP_THRESHOLD_PER_LEVEL) + (xpToAdd % XP_THRESHOLD_PER_LEVEL > 0 ? 1 : 0);
+      
+      batch.set(newSkillRef, {
+        name: sanitizedSkillName,
+        xp: xpToAdd,
+        level: initialLevel,
       });
+
+      // Update player's overall level and skill points as needed
+      const levelsGained = initialLevel - 1; // Subtract 1 because level starts at 1
+      if (levelsGained > 0) {
+        await this.updatePlayerLevelsAndSkillPoints(batch, userId, levelsGained);
+      }
     } else {
-      transaction.update(subSkillRef, {
-        xp: newSubSkillXp,
-        level: increment(subSkillLevelUps)
-      });
-    }
+      // Life skill exists, update its XP and level
+      for (const docSnapshot of querySnapshot.docs) {
+        const skillData = docSnapshot.data();
+        let newXP = skillData.xp + xpToAdd;
+        let newLevel = skillData.level;
+        let leveledUp = false;
 
-    // Update main skill and player's life skill
-    if (subSkillLevelUps > 0) {
-      const mainSkillData = firstMainSkillDoc.data() as MainSkill;
-      const extraXpForMainSkill = 500 * subSkillLevelUps;
-      let newMainSkillXp = mainSkillData.xp + extraXpForMainSkill;
-      let mainSkillLevelUps = Math.floor(newMainSkillXp / 1000);
-      newMainSkillXp %= 1000;
+        while (newXP >= XP_THRESHOLD_PER_LEVEL) {
+          newXP -= XP_THRESHOLD_PER_LEVEL;
+          newLevel++;
+          leveledUp = true;
+        }
 
-      transaction.update(firstMainSkillRef, {
-        xp: newMainSkillXp,
-        level: increment(mainSkillLevelUps)
-      });
+        const skillRef = lifeSkillRef(userId, docSnapshot.id);
+        batch.update(skillRef, { xp: newXP, level: newLevel });
 
-      const updatedTotalLevels = 1 + mainSkillLevelUps;
-      const newLifeSkillLevel = Math.floor(updatedTotalLevels / 6);
-      if (newLifeSkillLevel > (playerDoc.data() as Player).lifeSkillLevel) {
-        transaction.update(playerRef, { lifeSkillLevel: newLifeSkillLevel });
+        if (leveledUp) {
+          await this.updatePlayerLevelsAndSkillPoints(batch, userId, newLevel - skillData.level);
+        }
       }
     }
-  });
-};
+
+    // Commit the batch operation
+    await batch.commit();
+  }
+  
+  static async updatePlayerLevelsAndSkillPoints(batch: any, userId: string, levelsGained: number): Promise<void> {
+    const playerDocumentRef = playerRef(userId);
+
+    // Calculate new player level and skill points
+    const playerSnap = await getDoc(playerDocumentRef);
+    if (playerSnap.exists()) {
+      const playerData = playerSnap.data() as Player;
+      let additionalSkillPoints = Math.floor((playerData.lifeSkillsLevelSum + levelsGained) / 5) - Math.floor(playerData.lifeSkillsLevelSum / 5);
+      let newLifeSkillsLevelSum = playerData.lifeSkillsLevelSum + levelsGained;
+
+      // Update player's lifeSkillsLevelSum and skillPoints using the provided batch
+      batch.update(playerDocumentRef, {
+        lifeSkillsLevelSum: newLifeSkillsLevelSum,
+        skillPoints: increment(additionalSkillPoints),
+      });
+    } else {
+      console.log("Player document does not exist!");
+    }
+  }
+}

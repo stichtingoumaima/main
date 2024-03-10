@@ -26,8 +26,7 @@ import { useRouter } from "next/navigation";
 import { useSubscriptionStore } from "@/store/store";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import { addXpToFirstSubskillAndUpdateLifeSkill } from "@/lib/services/PlayerService";
-
+import { SkillService } from "@/lib/services/PlayerService";
 
 
 const formSchema = z.object({
@@ -113,7 +112,7 @@ function ChatInput({ chatId }: { chatId: string }) {
                   const xpToAdd = Number(responseObj.xp);
                   const skill = responseObj.skill;
                   if (!isNaN(xpToAdd) && xpToAdd > 0) {
-                    await addXpToFirstSubskillAndUpdateLifeSkill(session.user.id,xpToAdd,skill);
+                    await SkillService.addXpToLifeSkill(session.user.id,xpToAdd,skill);
                     console.log(`XP added: ${xpToAdd}`);
                     // Here, handle the successful addition of XP as needed
                   }
