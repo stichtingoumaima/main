@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { EnvelopeOpenIcon } from '@radix-ui/react-icons';
 import { signIn, useSession } from 'next-auth/react';
 import { initializePlayerData } from '@/lib/services/initializeGame';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
     const { data: session } = useSession();
@@ -32,16 +33,39 @@ export default function LoginPage() {
       
       // User is logged in, show the start game screen
       return (
-        <><BgVideo></BgVideo><StartGameScreen /></>
+        <> <video
+        autoPlay
+        loop
+        muted
+        className="h-screen  w-screen object-fill absolute -z-10"
+        src="./assets/loginscreen2.mp4"
+      >
+        <source src="./assets/loginscreen2.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video><StartGameScreen /></>
       );
     }
   
     // User is not logged in, show the login form
     return (
-      <><BgVideo></BgVideo><LoginForm showLogin={showLogin} /></>
+      <>    <video
+      autoPlay
+      loop
+      muted
+      className="h-screen  w-screen object-fill absolute -z-10"
+      src="./assets/loginscreen2.mp4"
+    >
+      <source src="./assets/loginscreen2.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video><LoginForm showLogin={showLogin} /></>
     );
   };
   const StartGameScreen = () => {
+        const router = useRouter(); // Initialize useRouter hook
+        const handleStartGameClick = () => {
+          router.push('/chat'); // Navigate to /chat
+      };
+  
     const { data: session } = useSession();
 
     useEffect(() => {
@@ -53,7 +77,7 @@ export default function LoginPage() {
     return (
       <div className="cursor-custom flex justify-center items-center h-screen bg-cover bg-center relative" style={{ backgroundImage: 'url(/your-background-image.jpg)' }}>
         <div className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <h1 className="text-white text-6xl font-bold mb-4 animate-move-up-and-down">Start Game</h1>
+          <h1 onClick={handleStartGameClick} className="text-white text-6xl font-bold mb-4 animate-move-up-and-down hover:text-purple-100">Start Game</h1>
           <hr className="border-t border-gray-300 my-4 w-16 mx-auto" />
           <p className="text-white mt-2">Click to Begin</p>
         </div>
@@ -65,6 +89,7 @@ export default function LoginPage() {
   }
   
   const LoginForm = ({ showLogin }: LoginFormProps) => {
+
   return (
     <section className="relative flex justify-center items-center h-screen overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-5"></div>

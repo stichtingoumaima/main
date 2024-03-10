@@ -21,7 +21,6 @@ export interface LifeSkill {
 export const lifeSkillConverter: FirestoreDataConverter<LifeSkill> = {
   toFirestore(lifeSkill: LifeSkill): DocumentData {
     return {
-
       playerId: lifeSkill.playerId,
       name: lifeSkill.name,
       xp: lifeSkill.xp,

@@ -1,13 +1,13 @@
+
+"use client"
+import { signIn } from "next-auth/react";
 import { Button } from "../ui/button";
-import { buttonVariants } from "../ui/button";
 import { HeroCards } from "./HeroCards";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-const backgroundImageUrl = './assets/background.jpeg';
 export const Hero = () => {
   return (
    
-<section className=" grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 bg-cover bg-no-repeat bg-center h-screen w-full z-50" >
-  <div className="absolute overflow-hidden w-full h-screen "> 
+<section className=" grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 bg-cover bg-no-repeat bg-center h-screen w-full " >
+  <div className="absolute overflow-hidden w-full h-screen -z-50 "> 
     <video
       autoPlay
       loop
@@ -40,17 +40,9 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-
-          <a
-            href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-            target="_blank"
-            className={`w-full md:w-1/3 ${buttonVariants({
-              variant: "outline",
-            })}`}
-          >
-            Play Now
-            <GitHubLogoIcon className="ml-2 w-5 h-5" />
-          </a>
+        <Button  className="w-full md:w-1/3"variant={'outline'} onClick={() => signIn()}>
+            Sign In
+        </Button>
         </div>
       </div>
 

@@ -25,7 +25,6 @@ interface Player {
     intelligence: number;
     defense: number;
   };
-  lifeSkillsLevelSum: number; // Sum of levels of all Life Skills, used to calculate player level
 }
 
 export const playerConverter: FirestoreDataConverter<Player> = {
@@ -35,9 +34,7 @@ export const playerConverter: FirestoreDataConverter<Player> = {
       totalXP: player.totalXP,
       combatLevel: player.combatLevel,
       skillPoints: player.skillPoints,
-      gameSkills: player.gameSkills,
-      lifeSkillsLevelSum: player.lifeSkillsLevelSum,
-    };
+      gameSkills: player.gameSkills    };
   },
   fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Player {
     const data = snapshot.data(options);
@@ -47,7 +44,6 @@ export const playerConverter: FirestoreDataConverter<Player> = {
       combatLevel: data.combatLevel,
       skillPoints: data.skillPoints,
       gameSkills: data.gameSkills,
-      lifeSkillsLevelSum: data.lifeSkillsLevelSum,
     };
   },
 };
