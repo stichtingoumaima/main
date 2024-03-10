@@ -67,10 +67,6 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
       const data = doc.data() as PlayerData;
       setPlayerData(data);
       // Example logic to determine if a level-up animation should be triggered
-      if(data.combatLevel > (playerData?.combatLevel ?? 0)) {
-        setLevelUpTrigger(true);
-        setTimeout(() => setLevelUpTrigger(false), 1000); // Reset trigger after animation
-      }
     });
 
     const lifeSkillsRef = collection(db, `players/${userId}/lifeSkills`).withConverter(lifeSkillConverter);

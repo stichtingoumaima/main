@@ -60,8 +60,11 @@ export default function LoginPage() {
       </div>
     );
   };
-  const LoginForm = ({ showLogin }) => {
-
+  interface LoginFormProps {
+    showLogin: boolean;
+  }
+  
+  const LoginForm = ({ showLogin }: LoginFormProps) => {
   return (
     <section className="relative flex justify-center items-center h-screen overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-5"></div>

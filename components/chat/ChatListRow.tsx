@@ -51,7 +51,7 @@ function ChatListRow({ chatId }: { chatId: string }) {
             />
             <div className="flex-1 min-w-0">
                 <p className="text-lg font-bold truncate">
-                    {!message ? "New Chat" : message?.user.name.split(" ")[0] || session?.user.name.split(" ")[0]}
+                    {!message ? "New Chat" :  message?.user.name?.split(" ")[0] || session?.user?.name?.split(" ")[0] || "Unknown User"}
                 </p>
                 <p className="text-sm text-gray-500 truncate">
                     {message?.translated?.[language] || "Get the conversation started..."}

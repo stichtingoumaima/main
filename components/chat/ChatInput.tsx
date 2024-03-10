@@ -130,7 +130,7 @@ function ChatInput({ chatId }: { chatId: string }) {
         toast({
           title: "Success",
           description: "Your message has been sent and XP added.",
-          variant: "positive",
+        
         });
   
       } catch (error) {
