@@ -22,7 +22,6 @@ export const initializePlayerData = async (userId: string) => {
         intelligence: 10,
         defense: 10,
       },
-      lifeSkillsLevelSum: 0,
     });
   }
 
