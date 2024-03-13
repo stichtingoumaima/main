@@ -1,14 +1,17 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
-import { db } from "@/firebase";
-import { doc, collection, onSnapshot } from "firebase/firestore";
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import UserAvatar from '../UserAvatar';
-import { playerConverter } from '@/lib/converters/Player';
-import { lifeSkillConverter } from '@/lib/converters/LifeSkill';
+import { db } from "@/firebase"; // Ensure this path is correct and Firebase is configured properly
+import { doc, collection, onSnapshot } from "firebase/firestore";
+import UserAvatar from '../UserAvatar'; // Ensure this path is correct
+import { playerConverter } from '@/lib/converters/Player'; // Ensure this path is correct
+import { lifeSkillConverter } from '@/lib/converters/LifeSkill'; // Ensure this path is correct
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'; // Ensure this path is correct
+// Note: Radix Icons import might not be necessary, so it's commented out. If you do use Radix icons, uncomment or adjust accordingly.
+// import { LockClosedIcon } from '@radix-ui/react-icons';
+import { LockIcon, MagnetIcon, UnlockIcon } from 'lucide-react';
 
-// Defining TypeScript interfaces for props and state
 interface GameSkill {
   health: number;
   stamina: number;
@@ -25,27 +28,33 @@ interface LifeSkill {
   level: number;
 }
 
+interface Archetype {
+  id: string;
+  name: string;
+  description: string;
+  gameSkillRef: string;
+  levelRequirement: number;
+  tier: number;
+  unlocked: boolean;
+}
+
 interface PlayerData {
   uid: string;
   name: string;
   image?: string;
   totalXP: number;
   combatLevel: number;
-  skillPoints: number;
   gameSkills: GameSkill;
-  lifeSkillsLevelSum: number;
 }
 
-// Assuming each level up requires 100 XP for demonstration purposes
 const maxXP = 1000;
 
-// SkillBar Functional Component for displaying skills progress
 const SkillBar: React.FC<{ xp: number; level: number }> = ({ xp, level }) => {
   const xpPercentage = ((xp % maxXP) / maxXP) * 100;
   return (
     <div className="relative w-full bg-gray-700 rounded-full h-1.5">
-      <motion.div 
-        className="absolute bg-blue-600 h-1.5 rounded-full" 
+      <motion.div
+        className="absolute bg-blue-600 h-1.5 rounded-full"
         initial={{ width: 0 }}
         animate={{ width: `${xpPercentage}%` }}
         transition={{ duration: 0.8 }}
@@ -54,30 +63,36 @@ const SkillBar: React.FC<{ xp: number; level: number }> = ({ xp, level }) => {
     </div>
   );
 };
-// PlayerSkillsPanel Component to display player skills and stats
+
 const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
   const { data: session } = useSession();
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [lifeSkills, setLifeSkills] = useState<LifeSkill[]>([]);
-  const [levelUpTrigger, setLevelUpTrigger] = useState(false);
+  const [archetypes, setArchetypes] = useState<Archetype[]>([]);
 
   useEffect(() => {
     const playerRef = doc(db, "players", userId).withConverter(playerConverter);
     const unsubscribePlayer = onSnapshot(playerRef, (doc) => {
-      const data = doc.data() as PlayerData;
-      setPlayerData(data);
-      // Example logic to determine if a level-up animation should be triggered
+      const data = doc.data();
+      if (data) setPlayerData(data as PlayerData);
     });
 
     const lifeSkillsRef = collection(db, `players/${userId}/lifeSkills`).withConverter(lifeSkillConverter);
     const unsubscribeLifeSkills = onSnapshot(lifeSkillsRef, (snapshot) => {
-      const skills = snapshot.docs.map((doc) => doc.data() as LifeSkill);
+      const skills = snapshot.docs.map(doc => doc.data() as LifeSkill);
       setLifeSkills(skills);
+    });
+
+    const archetypesRef = collection(db, `players/${userId}/archetypes`);
+    const unsubscribeArchetypes = onSnapshot(archetypesRef, (snapshot) => {
+      const archetypeData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Archetype[];
+      setArchetypes(archetypeData);
     });
 
     return () => {
       unsubscribePlayer();
       unsubscribeLifeSkills();
+      unsubscribeArchetypes();
     };
   }, [userId]);
 
@@ -100,12 +115,11 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
               className="h-14 w-14 rounded-full shadow-lg"
             />
             <div className="flex flex-col">
-              <h3 className="text-lg font-bold">{session?.user?.name}</h3>
+              <h3 className="text-lg font-bold">{playerData.name}</h3>
               <span className="text-sm text-gray-400">Combat Level: {playerData.combatLevel}</span>
               <SkillBar xp={playerData.totalXP} level={playerData.combatLevel} />
             </div>
           </motion.div>
-
           <div className="mb-4">
             <h2 className="text-xl font-bold text-gray-400 mb-2">Player Stats</h2>
             <div className="grid grid-cols-3 gap-4">
@@ -113,11 +127,48 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
                 <div key={skill} className="text-center">
                   <p className="text-sm font-semibold text-gray-400 capitalize">{skill}</p>
                   <p className="text-lg font-bold">{value}</p>
+                  <div className="mt-2 flex flex-col items-center">
+                    {archetypes
+                      .filter(archetype => archetype.gameSkillRef === skill)
+                      .sort((a, b) => a.tier - b.tier)
+                      .map((archetype, index, arr) => (
+                        <TooltipProvider key={archetype.id}>
+                          <Tooltip delayDuration={200}>
+                            <TooltipTrigger>
+                              <div className="relative">
+                                <div
+                                  className={`w-10 h-10 rounded-full border-2 ${
+                                    archetype.unlocked ? 'bg-green-500 border-green-700' : 'bg-gray-500 border-gray-700'
+                                  } flex items-center justify-center`}
+                                >
+                                  {archetype.unlocked ? (
+                                    <UnlockIcon className="w-4 h-4 text-white" />
+                                  ) : (
+                                    <LockIcon className="w-4 h-4 text-white" />
+                                  )}
+                                </div>
+                                {index < arr.length - 1 && (
+                                  <div className="absolute top-full left-1/2 w-0.5 h-4 bg-gray-500" />
+                                )}
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <div>
+                                <h3 className="text-lg font-bold">{archetype.name}</h3>
+                                <p className="text-sm">{archetype.description}</p>
+                                <p className="text-sm mt-2">
+                                  Level Requirement: {archetype.levelRequirement}
+                                </p>
+                              </div>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      ))}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-
           <div>
             <h2 className="text-xl font-bold text-gray-400 mb-2">Life Skills</h2>
             {lifeSkills.map(({ id, name, level, xp }) => (
@@ -136,4 +187,4 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
   );
 };
 
-export default PlayerSkillsPanel
+export default PlayerSkillsPanel;

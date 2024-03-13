@@ -96,6 +96,43 @@
     box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.6); /* Inner glow */
     pointer-events: none; /* Avoid interfering with interactions */
   }
+  
+  /* Custom styles */
+.skill-tree-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1fr auto;
+  place-items: center;
+  position: relative;
+  width: 100%;
+  height: 500px; /* Adjust as necessary */
+}
+
+.skill-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px; /* Adjust as necessary */
+  height: 64px; /* Adjust as necessary */
+  border-radius: 9999px;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+
+.skill-line {
+  position: absolute;
+  background-color: black;
+  /* The size and position will be set dynamically */
+}
+
+/* You might want to adjust the rotation degree based on the number of nodes */
+.node-1 { transform: rotate(0deg) translate(200px) rotate(0deg); }
+.node-2 { transform: rotate(60deg) translate(200px) rotate(-60deg); }
+.node-3 { transform: rotate(120deg) translate(200px) rotate(-120deg); }
+.node-4 { transform: rotate(180deg) translate(200px) rotate(-180deg); }
+.node-5 { transform: rotate(240deg) translate(200px) rotate(-240deg); }
+.node-6 { transform: rotate(300deg) translate(200px) rotate(-300deg); }
 
   ::-webkit-scrollbar {
     width: 8px; /* Adjust the width of the scrollbar */

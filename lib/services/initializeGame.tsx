@@ -1,50 +1,182 @@
 import { db } from "@/firebase";
-import { doc, getDoc, setDoc, runTransaction } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, query, where, getDocs, runTransaction } from "firebase/firestore";
 import { playerConverter } from "../converters/Player";
-import { lifeSkillConverter } from "../converters/LifeSkill";
 
 export const initializePlayerData = async (userId: string) => {
   const playerDocRef = doc(db, "players", userId).withConverter(playerConverter);
-  const playerDoc = await getDoc(playerDocRef);
-
-  if (!playerDoc.exists()) {
-    // Initialize player if not exists
-    await setDoc(playerDocRef, {
-      uid: userId,
-      totalXP: 0,
-      combatLevel: 1,
-      skillPoints: 0,
-      gameSkills: {
-        health: 100,
-        stamina: 100,
-        strength: 10,
-        agility: 10,
-        intelligence: 10,
-        defense: 10,
-      },
-    });
-  }
-
-  // Define life skills data
-  const lifeSkillsData = [
-    { name: 'coding', xp: 0, level: 1 },
-    { name: 'cooking', xp: 0, level: 1 },
-    // Add more life skills as needed
-  ];
-
-  // Initialize life skills
-  lifeSkillsData.forEach(async (skill) => {
-    const skillId = `${skill.name.toLowerCase()}`; // Using skill name as part of document ID for predictability
-    const skillDocRef = doc(db, `players/${userId}/lifeSkills`, skillId).withConverter(lifeSkillConverter);
-
+  try {
     await runTransaction(db, async (transaction) => {
-      const skillDoc = await transaction.get(skillDocRef);
-      if (!skillDoc.exists()) {
-        transaction.set(skillDocRef, { ...skill, playerId: userId });
+      const playerDoc = await transaction.get(playerDocRef);
+      if (!playerDoc.exists()) {
+        transaction.set(playerDocRef, {
+          uid: userId,
+          totalXP: 0,
+          combatLevel: 1,
+          gameSkills: {
+            health: 1,
+            stamina: 1,
+            strength: 1,
+            agility: 1,
+            intelligence: 1,
+            defense: 1,
+          },
+        });
+        const archetypesRef = collection(db, `players/${userId}/archetypes`);
+        const archetypesQuery = query(archetypesRef);
+        const archetypesSnap = await getDocs(archetypesQuery);
+        if (archetypesSnap.empty) {
+          const archetypesData = [
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "intelligence",
+              levelRequirement: 1,
+              tier: 1,
+              unlocked: true
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "intelligence",
+              levelRequirement: 2,
+              tier: 2,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "intelligence",
+              levelRequirement: 5,
+              tier: 3,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "strength",
+              levelRequirement: 1,
+              tier: 1,
+              unlocked: true
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "strength",
+              levelRequirement: 2,
+              tier: 2,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "strength",
+              levelRequirement: 5,
+              tier: 3,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "stamina",
+              levelRequirement: 1,
+              tier: 1,
+              unlocked: true
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "stamina",
+              levelRequirement: 2,
+              tier: 2,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "stamina",
+              levelRequirement: 5,
+              tier: 3,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "agility",
+              levelRequirement: 1,
+              tier: 1,
+              unlocked: true
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "agility",
+              levelRequirement: 2,
+              tier: 2,              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "agility",
+              levelRequirement: 5,              tier: 3,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "defense",
+              levelRequirement: 1,
+              tier: 1,
+              unlocked: true
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "defense",
+              levelRequirement: 2,
+              tier: 2,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "defense",
+              levelRequirement:3,              
+              tier: 3,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "health",
+              levelRequirement: 1,
+              tier: 1,
+              unlocked: true
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "health",
+              levelRequirement: 2,
+              tier: 2,
+              unlocked: false,
+            },
+            {
+              name: "Unknown",
+              description: "AI will craft a personalized skill tree based on your everyday tasks and activities, tailoring it to your unique lifestyle",
+              gameSkillRef: "health",
+              levelRequirement: 5,
+              tier: 3,
+              unlocked: false,
+            },
+          ];
+          archetypesData.forEach(archetype => {
+            const newArchetypeRef = doc(collection(db, `players/${userId}/archetypes`));
+            transaction.set(newArchetypeRef, archetype);          });
+        }
       }
-      // If it exists, no action is taken, preventing duplicates
-    }).catch((error) => {
-      console.error("Transaction failed: ", error);
     });
-  });
+  } catch (error) {
+    console.error("Transaction failed: ", error);
+    throw error;
+  }
 };
