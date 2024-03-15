@@ -1,4 +1,3 @@
-
 import { About } from "@/components/landing/About";
 import { Hero } from "@/components/landing/Hero";
 import { FAQ } from "@/components/landing/FAQ";
@@ -10,14 +9,14 @@ import Header from "@/components/landing/Header";
 export default function Home() {
   return (
     <main className="cursor-custom">
-           <Header />
-        <Hero />
+      <Header />
+      <Hero />
       <About />
       <Pricing />
 
       <FAQ />
       <Footer />
       <ScrollToTop />
-    </main >
-  )
+    </main>
+  );
 }
