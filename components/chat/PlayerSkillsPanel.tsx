@@ -120,9 +120,9 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
               <SkillBar xp={playerData.totalXP} level={playerData.combatLevel} />
             </div>
           </motion.div>
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-gray-400 mb-2">Player Stats</h2>
-            <div className="grid grid-cols-3 gap-4">
+          <div className="mb-4 overflow-scroll h-2/3">
+            <h2 className="text-xl font-bold text-gray-400 mb-2 ">Player Stats</h2>
+            <div className="grid grid-cols-3 gap-4 ">
               {Object.entries(playerData.gameSkills).map(([skill, value]) => (
                 <div key={skill} className="text-center">
                   <p className="text-sm font-semibold text-gray-400 capitalize">{skill}</p>
@@ -169,8 +169,8 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
               ))}
             </div>
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-gray-400 mb-2">Life Skills</h2>
+          <div className='max-h-96 overflow-scroll'>
+            <h2 className="text-xl font-bold text-gray-400 mb-2 ">Life Skills</h2>
             {lifeSkills.map(({ id, name, level, xp }) => (
               <div key={id} className="mb-4">
                 <div className="flex justify-between items-center">

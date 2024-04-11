@@ -15,8 +15,9 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { activityLogConverter } from '@/lib/converters/ActivityLogs'; // Ensure you have this converter set up
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import { getPlayerCombatLevel } from '@/lib/converters/Player';
 
 const formSchema = z.object({
   input: z.string().max(1000),
@@ -33,8 +34,18 @@ interface XPDetails {
   skill: string;
   reason:string;
 }
+interface LevelUpDetails {
+  hp: number;
+  sp: number;
+  atk: number;
+  def: number;
+  crt: number;
+}
 
-const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {  
+  const [levelUpDialogOpen, setLevelUpDialogOpen] = useState(false);
+  const [levelUpDetails, setLevelUpDetails] = useState<LevelUpDetails>({ hp: 0, sp: 0, atk: 0, def: 0, crt: 0 });
+
   const { data: session } = useSession();
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -45,18 +56,25 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
       input: '',
     },
   });
+ 
 
   const logActivity = async (activityDetails: XPDetails) => {
+  
+    if (!session?.user?.id) {
+      console.error("Session user ID is not available.");
+      return;
+    }
+    const combatLevel = await getPlayerCombatLevel(session.user.id);
     const activityLogRef = doc(collection(db, `players/${session.user.id}/activitylog`)).withConverter(activityLogConverter);
-    console.log(activityLogRef)
+    
     await setDoc(activityLogRef, {
       activityType: activityDetails.activity,
       xpEarned: activityDetails.xp,
       skillImpacted: activityDetails.skill,
-      statImpacted:activityDetails.stat,
+      statImpacted: activityDetails.stat,
       timestamp: serverTimestamp(),
-      combatLevelAtTimeOfActivity: 3,
-      reason:activityDetails.reason
+      combatLevelAtTimeOfActivity: combatLevel, // Use the fetched combat level here
+      reason: activityDetails.reason
     });
   };
 
@@ -86,17 +104,29 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
         const data = doc.data();
         if (data && data.response) {
           try {
-            const responseObj = JSON.parse(data.response);
-            if (responseObj.xp) {
-              setXpDetails({ xp: responseObj.xp, skill: responseObj.skill, stat: responseObj.stat,activity:responseObj.activity,reason:responseObj.text });
-              setDialogOpen(true);
+            // Find the index of the first opening curly brace
+            const startIndex = data.response.indexOf('{');
+            // If a curly brace was found, and it's not at the end of the string
+            if (startIndex !== -1 && startIndex < data.response.length) {
+              // Extract the substring from the first '{' to the end of the response
+              const jsonString = data.response.substring(startIndex);
+              // Parse the JSON string
+              const responseObj = JSON.parse(jsonString);
+              if (responseObj.xp) {
+                setXpDetails({
+                  xp: responseObj.xp,
+                  skill: responseObj.skill,
+                  stat: responseObj.stat,
+                  activity: responseObj.activity,
+                  reason: responseObj.text
+                });
+                setDialogOpen(true);
+              }
+            } else {
+              console.log('No JSON object found in the response');
             }
           } catch (error) {
-            toast({
-              title: "Error",
-              description: "Failed to parse response.",
-              variant: "destructive",
-            });
+            console.log(error);
           }
           unsubscribe();
         }
@@ -117,19 +147,15 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
 
   const acceptXP = async () => {
     try {
-      await SkillService.addXpToLifeSkill(session.user.id!, xpDetails.xp, xpDetails.skill);
-      await logActivity(xpDetails);
+            await logActivity(xpDetails);
+      await SkillService.addXpToLifeSkill(session.user.id!, xpDetails.xp, xpDetails.skill,xpDetails.stat);
+      handleLevelUp();
       toast({
         title: "XP Added",
         description: `You've gained ${xpDetails.xp} XP in ${xpDetails.skill}.`,
       });
     } catch (error) {
       console.log(error)
-      toast({
-        title: "Error",
-        description: "Failed to add XP.",
-        variant: "destructive",
-      });
     }
     setDialogOpen(false);
   };
@@ -141,7 +167,17 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
     });
     setDialogOpen(false);
   };
+  const handleLevelUp = () => {
+    // Simulate a level-up event with mocked new stats
+    setLevelUpDetails({ hp: 178, sp: 67, atk: 112, def: 41, crt: 3 });
+    setLevelUpDialogOpen(true);
+  };
 
+  const confirmLevelUp = () => {
+    // Implement the logic to update the player's stats in your database
+    console.log('New stats confirmed:', levelUpDetails);
+    setLevelUpDialogOpen(false);
+  };
   return (
     <>
       <div className="sticky bottom-0">
@@ -180,6 +216,35 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
               </div>
               <DialogClose asChild>
                 <button className="absolute top-0 right-0"><X className="h-4 w-4" /></button>
+              </DialogClose>
+            </DialogContent>
+          </Dialog>
+        )}
+        {levelUpDialogOpen && (
+          <Dialog open={levelUpDialogOpen} onOpenChange={setLevelUpDialogOpen}>
+            <DialogContent>
+              <DialogTitle>Level Up!</DialogTitle>
+              <DialogDescription>
+                Congratulations! Your character's stats have improved!
+              </DialogDescription>
+              <motion.div
+                initial={{ color: 'red' }}
+                animate={{ color: 'green' }}
+                transition={{ duration: 1 }}
+              >
+                HP: {9} ➔ {levelUpDetails.hp}<br/>
+                SP: {20} ➔ {levelUpDetails.sp}<br/>
+                ATK: {5} ➔ {levelUpDetails.atk}<br/>
+                DEF: {3} ➔ {levelUpDetails.def}<br/>
+                CRT: {7} ➔ {levelUpDetails.crt}
+              </motion.div>
+              <div className="flex justify-center gap-4 my-4">
+                <Button onClick={confirmLevelUp} className="bg-green-500 text-white rounded px-4 py-2">Confirm</Button>
+              </div>
+              <DialogClose asChild>
+                <Button className="absolute top-0 right-0">
+                  <X className="h-4 w-4" />
+                </Button>
               </DialogClose>
             </DialogContent>
           </Dialog>

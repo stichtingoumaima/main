@@ -76,5 +76,16 @@ export const playerRef = (userId: string) =>
 export const playersCollectionRef = () =>
   collection(db, "players").withConverter(playerConverter);
 
+  export async function getPlayerCombatLevel(uid: string): Promise<number> {
+    const playerRef = doc(db, "players", uid).withConverter(playerConverter);
+    const playerSnap = await getDoc(playerRef);
+    if (!playerSnap.exists()) {
+      console.error("Player does not exist!");
+      throw new Error("Player does not exist!");
+    }
+    const playerData = playerSnap.data();
+    return playerData.combatLevel;
+  }
+
 // Ensure to export the Player interface if it needs to be used elsewhere
 export type { Player };
