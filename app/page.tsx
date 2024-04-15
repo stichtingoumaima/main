@@ -8,7 +8,7 @@ import Header from "@/components/landing/Header";
 
 export default function Home() {
   return (
-    <main className="cursor-custom">
+    <main className="cursor-custom hover:cursor-custom">
       <Header />
       <Hero />
       <About />

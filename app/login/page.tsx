@@ -9,6 +9,7 @@ import { EnvelopeOpenIcon } from '@radix-ui/react-icons';
 import { signIn, useSession } from 'next-auth/react';
 import { initializePlayerData } from '@/lib/services/initializeGame';
 import { useRouter } from 'next/navigation';
+import { Separator } from '@radix-ui/react-dropdown-menu';
 
 export default function LoginPage() {
     const { data: session } = useSession();
@@ -94,32 +95,25 @@ export default function LoginPage() {
 
   return (
     <section className="relative flex justify-center items-center h-screen overflow-hidden">
-      <div className="absolute inset-0 bg-black opacity-5"></div>
-        <Card className={`transform transition-all duration-700 ease-out w-2/3 p-5 bg-black bg-opacity-30 backdrop-blur-md border border-gray-700 shadow-xl rounded-lg ${showLogin ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ maxWidth: '600px' }}>
+      <div className="absolute inset-0 bg-black opacity-5 "></div>
+        <Card className={`transform transition-all duration-700 ease-out bg-slate-800 w-full p-5 bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
+       border-2 border-cyan-500  ${showLogin ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ maxWidth: '600px' }}>
           <CardHeader className="text-center space-y-4">
-            <CardTitle className="text-4xl md:text-5xl text-white font-bold tracking-wide">IRLQUEST.AI</CardTitle>
-            <div className="flex flex-col md:flex-row gap-2">
-              <Button className="hover:cursor-custom bg-white hover:bg-blue-500 text-black rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 w-full">
-                <EnvelopeOpenIcon onClick={() => signIn("google", { callbackUrl: "/login" })} className="mr-2 h-4 w-4" /> Login with Gmail
+            <CardTitle>Link Account</CardTitle>
+            
+            <div className="flex flex-col  gap-2">
+              <Button onClick={() => signIn("google", { callbackUrl: "/login" })} className="hover:cursor-custom bg-white hover:bg-gray-300 text-black shadow-md  h-14 ">
+                <EnvelopeOpenIcon className="mr-2 h-4 w-4" /> Login with Gmail
               </Button>
-              <Button className="bg-white hover:bg-indigo-600 text-black rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 w-full">
-                <EnvelopeOpenIcon onClick={() => signIn("google", { callbackUrl: "/login" })} className="mr-2 h-4 w-4" /> Login with Email
+              <Button onClick={() => signIn("google", { callbackUrl: "/login" })} className="hover:cursor-custom bg-white hover:bg-gray-300 text-black shadow-md   h-14 ">
+                <EnvelopeOpenIcon  className="mr-2 h-4 w-4" /> Login with Appel
+              </Button>
+              <Button onClick={() => signIn("google", { callbackUrl: "/login" })} className="hover:cursor-custom bg-white hover:bg-gray-300 text-black shadow-md  h-14 ">
+                <EnvelopeOpenIcon  className="mr-2 h-4 w-4" /> Login with Email
               </Button>
             </div>
+            <Separator />
           </CardHeader>
-          <CardContent>
-            <form>
-              <div className="w-full grid gap-4">
-                <div className="flex flex-col space-y-3">
-                  <Input className="bg-white border-gray-500 border-[1.5px] h-14" id="email" placeholder="Enter email/username" />
-                  <Input className="bg-white border-gray-600 border-[1.5px] h-14" id="password" placeholder="Enter password" />
-                </div>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter className="w-full">
-            <Button className="bg-white hover:bg-indigo-600 hover:text-white text-black rounded-lg shadow-md px-10 py-2 font-semibold tracking-wide uppercase transition duration-300 ease-in-out transform hover:scale-105 h-16 text-xl md:text-2xl w-full" onClick={() => signIn("google", { callbackUrl: "/login" })}>Start Game</Button>
-          </CardFooter>
         </Card>
     </section>
   );

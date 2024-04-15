@@ -108,6 +108,10 @@
   height: 500px; /* Adjust as necessary */
 }
 
+.neon-glow {
+  filter: drop-shadow(0 0 2px rgba(3, 143, 250, 0.8)) drop-shadow(0 0 10px rgba(13, 144, 245, 0.445))
+}
+
 .skill-node {
   display: flex;
   align-items: center;
@@ -151,5 +155,13 @@
   }
   .chat-background {
     background: linear-gradient(to left, #000000DD, transparent);
+  }
+}
+@layer components {
+  .inner-shadow {
+    @apply shadow-inner;
+  }
+  .outer-glow {
+    @apply shadow-outer-glow;
   }
 }

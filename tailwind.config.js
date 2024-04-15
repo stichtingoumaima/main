@@ -34,6 +34,11 @@ module.exports = {
       },
     },
     extend: {
+      boxShadow: {
+        'inner': 'inset -12px -8px 40px #46464620',
+        'outer-glow': '0 0 6px rgba(255, 255, 255, 0.5)',
+        
+      },
       fontFamily: {
         'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
       },
