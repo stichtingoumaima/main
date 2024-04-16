@@ -32,9 +32,11 @@ import {
   Clipboard,
   DoorOpen,
   DoorOpenIcon,
+  LogOut,
   Mail,
   MailCheck,
   Mailbox,
+  Power,
   ShoppingCart,
   SwordIcon,
   Target,
@@ -185,7 +187,7 @@ const Main = () => {
               </div>
               <div className="flex flex-col gap-6 align-bottom justify-end">
                 <GearIcon className="text-[#A5B4D3] w-14 h-14" />
-                <BanIcon className="text-[#A5B4D3] w-14 h-14" />
+                <Power className="text-[#A5B4D3] w-14 h-14" />
               </div>
             </div>
           </div>
