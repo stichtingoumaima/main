@@ -45,34 +45,7 @@ const NavItem = ({ icon: Icon }) => (
   </div>
 );
 
-const LeftSideNav = () => (
-  <div className="relative flex flex-col items-center justify-center pt-10 h-full">
-    <NavItem icon={Calendar} />
-    <div className="w-px bg-white h-full opacity-50 absolute left-12"></div>
-    <NavItem icon={FileText} />
-    <NavItem icon={FileText} />
-    <NavItem icon={FileText} />
-  </div>
-);
 
-const MissionItem = ({ title, progress, points }) => (
-  <div className="flex justify-between items-center bg-black bg-opacity-40 text-white py-2 px-4  shadow-md h-28 border-l-cyan-500 border-l-[3px]">
-    <div className='flex flex-col justify-around h-full w-4/6'>
-      <h3 className="font-bold text-xl">{title}</h3>
-      <div className=" bg-white bg-opacity-30 h-[0.35rem] overflow-hidden">
-        <div className="bg-blue-400  h-2" style={{ width: `${progress}%` }}></div>
-      </div>
-    </div>
-    <div className='flex flex-row relative justify-between bg-gray-400 bg-opacity-30 p-4 rounded-full w-1/6'>
-      <Award className="text-blue-300 mr-2 absolute top-0 left-0" size={60} />
-      <span></span>
-      <span>{points}</span>
-      </div>
-    <button className="bg-[#C2EAFF]  w-1/6 text-slate-900 font-bold py-1 px-3 ml-4  h-12 text-xl border-4 border-[#80D8FF]">
-      Complete
-    </button>
-  </div>
-);
 
 
 
@@ -81,10 +54,9 @@ const App = () => {
     <div
       className="min-h-screen bg-cover 
        bg-no-repeat bg-center flex gap-20 "
-
+      style={{ backgroundImage: "url('/assets/backgroundcyro.jpg')" }} // Replace with your actual image URL
     >
       
-      <LeftSideNav />
       <div className="flex-grow">
         <TopNavigation />
         <div id="leftPlayer">
