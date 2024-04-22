@@ -1,70 +1,98 @@
 "use client";
-
-// Mock custom icons, assuming you have a custom icon set
-
 import React from 'react';
-import { ArrowLeftCircle, PlusCircle, Bell, Sliders, XCircle, Info, BookOpen, FileText, Book, Calendar, Award, Plus, Flower, LayoutDashboard, DoorClosed, DoorOpen, ArrowLeft, Coins, Gift, StepBack } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
+import './app.css'
 
-const TopNavigation = () => (
-  <div className=" p-4 flex items-center justify-between gap-4">
-    <div className="flex items-center">
-      <StepBack className="text-white" size={24} />
-      <h1 className="text-[#CFE9FD] text-2xl font-semibold ml-2">Missions</h1>
-      <Info className="text-blue-300 ml-2" size={30} />
-      <Gift className="text-yellow-200 mr-1" size={30} />
-    </div>
-    <div className="flex items-center gap-2">
-      <div className='flex flex-row bg-black bg-opacity-40 w-40 justify-between'>
-      <Flower className="text-purple-300 mr-1" size={40} />
-      <span className="text-white text-4xl  ">70</span>
-      <Plus className="text-purple-300  border-2 border-gray-500" size={40} />
-      </div>
-      <div className='flex flex-row bg-black bg-opacity-40 w-40 justify-between'>
-      <Coins className="text-yellow-200 mr-1" size={40} />
-      <span className="text-white text-4xl  ">70</span>
-      <Plus className="text-purple-300  border-2 border-gray-500" size={40} />
-      </div>
+// Sample character data
+const characters = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  name: `Character ${i + 1}`,
+  level: Math.floor(Math.random() * 20) + 1,
+  rank: 'SR',
+  imagePath: `/assets/character${1}.png`, // Replace with actual image paths
+}));
 
-      <div className="relative">
-        <LayoutDashboard className="text-white" size={50} />
-        <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
-      </div>
-      <DoorOpen className="text-white mr-2" size={50} />
-    
-    </div>
-  </div>
-);
 
-const NavItem = ({ icon: Icon }) => (
-  <div className="flex items-center space-x-8 ml-[2.8rem] space-y-6">
-    <div className="w-[0.45rem] h-[0.45rem] bg-white rounded-full" />
-    <div className="border border-gray-300 border-opacity-20 rounded-full p-4  ">
-      <Icon className="text-white" size={42} />
+
+
+const CharacterCard = ({ name, level, imagePath }) => (
+  <div className="relative flex flex-col items-center m-2 bg-black bg-opacity-20 border-2 border-yellow-200 h-52 overflow-hidden">
+    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${imagePath})` }}></div>
+    <div className="bg-purple-600 text-white text-xs px-2 py-1 absolute z-10 right-0 top-0 m-1">SR</div>
+    <img src={imagePath} alt={name} className="h-24 w-24 rounded-md opacity-0" />
+    <div className="text-white mt-2 z-10">Lv. {level}</div>
+    <div className="flex z-10">
+      {[...Array(5)].map((_, index) => (
+        <span key={index} className="text-yellow-400 text-xs">&#9733;</span> // Star Icon
+      ))}
     </div>
   </div>
 );
 
 
 
-
+const CharacterInfo = () => (
+  <div className="flex flex-col  text-white p-4 space-y-2 h-full justify-between">
+    <div className="flex justify-between items-center">
+      <span className="bg-red-500 text-xs px-2 py-1 rounded-full">SR</span>
+      <span>Song Chiyul</span>
+      <button className="bg-gray-200 p-2 rounded-full">
+        {/* Icon for the search button */}
+        🔍
+      </button>
+    </div>
+    <div className="flex justify-between items-center">
+      <span>LV. 7/8</span>
+      <button className="animate-pulse bg-gray-200 p-2 rounded-full">
+        {/* Icon for the upgrade button */}
+        ⬆️
+      </button>
+    </div>
+    <div className="space-y-2">
+      <div>Advancement</div>
+      <div className="flex">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className="text-yellow-400">&#9733;</span> // Star Icon
+        ))}
+      </div>
+    </div>
+    <div className="space-y-2">
+      <div>Total Power: 3,104</div>
+      <div>HP: 1,225</div>
+      <div>Attack: 769</div>
+      <div>Defense: 708</div>
+    </div>
+    <div className="flex justify-between items-center bg-black bg-opacity-50 p-2 ">
+      <span className="text-xs">Lv. 1</span>
+      <div className="flex-grow">
+        <img src="/assets/barran.png" alt="Weapon" className="h-16 mx-auto" />
+      </div>
+      <span className="text-xs">Hatchet</span>
+    </div>
+  </div>
+);
 
 const App = () => {
   return (
-    <div
-      className="min-h-screen bg-cover 
-       bg-no-repeat bg-center flex gap-20 "
-      style={{ backgroundImage: "url('/assets/backgroundcyro.jpg')" }} // Replace with your actual image URL
-    >
-      
-      <div className="flex-grow">
-        <TopNavigation />
-        <div id="leftPlayer">
-  <video id="leftVideo" autoPlay loop muted className="">
-    <source src="/assets/warrior.webm" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-</div>
+    <div className="flex h-screen overflow-hidden">
+      <div className="overflow-y-scroll w-1/3">
+        <div className="grid grid-cols-3 gap-4 p-4">
+          {characters.map((character) => (
+            <CharacterCard key={character.id} {...character} />
+          ))}
+        </div>
+      </div>
+      <div className='relative w-1/3'>
+      <div className="absolute  items-center bottom-0 -left-72 w-[10000px] ">
+        {/* Placeholder for the looping video */}
+        <video autoPlay loop muted className="">
+        <source src="/assets/warrior.webm" type="video/mp4" className='w-full h-full ' />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      </div>
+
+      <div className="w-1/3 ">
+        <CharacterInfo />
       </div>
     </div>
   );
