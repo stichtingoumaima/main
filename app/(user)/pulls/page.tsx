@@ -1,62 +1,70 @@
 "use client";
 import React, { useState } from "react";
+import './app.css'
 
-// Sample character data
 const characters = Array.from({ length: 5 }, (_, i) => ({
-  id: i,
-  name: `Character ${i + 1}`,
-  level: 1,
-  rank: "SR",
-  imagePath: `/assets/character${1}.png`, // Using the same image for simplicity
-  rarity: i % 2 === 0 ? 'rare_holo' : 'normal'
+    id: i,
+    name: `Character ${i + 1}`,
+    level: 1,
+    rank: "SR",
+    imagePath: `/assets/character${ 1}.png`, // Assuming different images for variety
+    rarity: i % 2 === 0 ? 'rare_holo' : 'normal'
 }));
 
+
 const CharacterCard = ({ name, level, imagePath, rarity }) => {
-  const [hoverEffects, setHoverEffects] = useState('');
+  const [style, setStyle] = useState({});
 
-  // Handle mouse movement over the card
   const handleMouseMove = (e) => {
-    const rect = e.target.getBoundingClientRect();
-    const x = e.clientX - rect.left; // x position within the element.
-    const y = e.clientY - rect.top;  // y position within the element.
-    const xPercent = Math.round(100 / rect.width * x);
-    const yPercent = Math.round(100 / rect.height * y);
+    const { offsetX, offsetY, target } = e.nativeEvent;
+    const { clientWidth: width, clientHeight: height } = target;
+    const posX = (offsetX / width) * 100;
+    const posY = (offsetY / height) * 100;
 
-    // Dynamic gradient based on mouse position
-    const gradient = `linear-gradient(135deg, rgba(255, 255, 255, 0.3) ${xPercent}%, rgba(255, 255, 255, 0.1) ${yPercent}%)`;
-    setHoverEffects(`background-image: url('https://assets.codepen.io/13471/sparkles.gif'), ${gradient}; mix-blend-mode: color-dodge;`);
+    const gradientPos = `background-position: ${100 - posX}% ${100 - posY}%;`;
+    const sparklePos = `background-position: ${(100 - posX) / 1.5}% ${(100 - posY) / 1.5}%;`;
+    const opacity = `${1 - Math.abs(50 - posX) * 0.01 - Math.abs(50 - posY) * 0.01}`;
+
+    setStyle({
+      transform: `rotateX(${(50 - posY) / 10}deg) rotateY(${(posX - 50) / 10}deg)`,
+      '--gradient-pos': gradientPos,
+      '--sparkle-pos': sparklePos,
+      '--opacity': opacity
+    });
   };
 
   const handleMouseLeave = () => {
-    setHoverEffects('');
+    setStyle({});
   };
 
   return (
-    <div className={`relative w-full h-3/4 flex flex-col items-center m-2 bg-black bg-opacity-20 border-2 border-yellow-200 overflow-hidden card ${rarity}`}
-         style={{ backgroundImage: `url(${imagePath})` }}
-         onMouseMove={handleMouseMove}
-         onMouseLeave={handleMouseLeave}
-         data-rarity={rarity}>
-      <div className="absolute inset-0" style={{ backgroundImage: hoverEffects }}></div>
-      <div className="bg-purple-600 text-white text-xs px-2 py-1 absolute z-10 right-0 top-0 m-1">SR</div>
-      <div className="text-white mt-2 z-10">Lv. {level}</div>
-      <div className="flex z-10">
-        {[...Array(5)].map((_, index) => (
-          <span key={index} className="text-yellow-400 text-xs">&#9733;</span>
-        ))}
+    <div
+      className={`card ${rarity}`}
+      style={{
+        backgroundImage: `url(${imagePath})`,
+        ...style
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="card-info">
+        <h3>{name}</h3>
+        <p>Lv. {level}</p>
       </div>
     </div>
   );
 };
 
+
+
 export default function Home() {
-  return (
-    <div className="flex h-screen w-screen overflow-hidden">
-      <div className="flex flex-row justify-around align-middle items-center w-full h-full">
-        {characters.map((character) => (
-          <CharacterCard key={character.id} {...character} />
-        ))}
+    return (
+      <div className="flex h-screen w-screen overflow-hidden">
+        <div className="flex flex-row justify-around align-middle items-center w-full h-full">
+          {characters.map((character) => (
+            <CharacterCard key={character.id} {...character} />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
