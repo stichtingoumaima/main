@@ -14,20 +14,31 @@ const characters = Array.from({ length: 10 }, (_, i) => ({
 
 
 
-const CharacterCard = ({ name, level, imagePath }) => (
-  <div className="relative flex flex-col items-center m-2 bg-black bg-opacity-20 border-2 border-yellow-200 h-52 overflow-hidden">
-    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${imagePath})` }}></div>
-    <div className="bg-purple-600 text-white text-xs px-2 py-1 absolute z-10 right-0 top-0 m-1">SR</div>
-    <img src={imagePath} alt={name} className="h-24 w-24 rounded-md opacity-0" />
+const CharacterCard = ({ name, level, imagePath, rarity }) => (
+  <div className={`relative flex flex-col items-center m-2 bg-black bg-opacity-20 border-2 border-yellow-200 h-52 overflow-hidden card ${rarity}`}>
+    <div
+      className="absolute inset-0 bg-cover bg-center card__shine"
+      style={{ backgroundImage: `url(${imagePath})`, zIndex: -1 }} // Set a lower z-index
+      data-rarity={rarity}
+    ></div>
+    <div className="bg-purple-600 text-white text-xs px-2 py-1 absolute z-10 right-0 top-0 m-1">
+      SR
+    </div>
+    <img
+      src={imagePath}
+      alt={name}
+      className="h-24 w-24 rounded-md opacity-75" // Adjust opacity if needed
+    />
     <div className="text-white mt-2 z-10">Lv. {level}</div>
     <div className="flex z-10">
       {[...Array(5)].map((_, index) => (
-        <span key={index} className="text-yellow-400 text-xs">&#9733;</span> // Star Icon
+        <span key={index} className="text-yellow-400 text-xs">
+          &#9733;
+        </span>
       ))}
     </div>
   </div>
 );
-
 
 
 const CharacterInfo = () => (
