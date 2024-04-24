@@ -49,7 +49,7 @@ const Main = () => {
     <div className="relative h-screen">
       <Drawer direction="right">
         <DrawerTrigger>Open</DrawerTrigger>
-        <DrawerContent className="flex flex-row  md:w-5/12 h-full border-l-gray-500 border-2">
+        <DrawerContent className="flex flex-row  md:w-4/12 h-full border-l-gray-500 border-2">
           <div className="flex flex-col bg-[#1D243B] w-full">
             {/* Profile Section */}
             <DrawerHeader>

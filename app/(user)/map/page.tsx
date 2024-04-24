@@ -2,7 +2,7 @@
 import React, { useRef, useCallback } from 'react';
 import Map, { NavigationControl, GeolocateControl, Source, Layer, useMap } from 'react-map-gl';
 
-export default function Home() {
+export default function Mapbox() {
     const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
     const mapRef = useRef(null);
 

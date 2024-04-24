@@ -189,13 +189,13 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
               render={({ field }) => (
                 <FormItem className="flex-1 bg-transparent focus:bg-white border-2 border-zinc-600 opacity-75 w-4/6 h-full rounded-full transition duration-300 ease-in-out">
                   <FormControl>
-                    <Input {...field} className="border-none bg-transparent focus:bg-white border-2 rounded-full text-black dark:placeholder:text-gray-300 font-semibold h-12 text-3xl text-center" placeholder="Click to enter" />
+                    <Input {...field} className="border-none bg-transparent focus:bg-white border-2 rounded-full w-full text-black dark:placeholder:text-gray-300 font-semibold h-12 text-xl text-center" placeholder="Click to enter" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-yellow-50 rounded-full h-12 w-36 text-2xl font-semibold text-gray-600">Send</Button>
+            <Button type="submit" className="bg-yellow-50 rounded-full h-12  text-2xl font-semibold text-gray-600">Send</Button>
           </form>
         </Form>
       </div>

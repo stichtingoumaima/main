@@ -1,0 +1,5 @@
+.mapboxgl-control-container {
+    visibility: hidden !important;
+    background-color: green;
+    display: none !important;
+}

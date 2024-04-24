@@ -63,9 +63,11 @@ function ChatMessages({
   };
 
   return (
-    <div className="flex flex-col w-4/6 bg-[#212436] backdrop-blur-sm bg-opacity-50">
-      <AdminControls chatId={chatId} />
-      <ChatMembersBadges chatId={chatId} />
+    <div className="flex flex-col w-5/12 bg-slate-800  p-5 bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
+    border-2 border-cyan-500
+     ">
+      {/* <AdminControls chatId={chatId} />
+      <ChatMembersBadges chatId={chatId} /> */}
       <div className="flex-1 overflow-auto">
         <motion.div
           className="p-5"
@@ -86,7 +88,7 @@ function ChatMessages({
                     <UserAvatar
                       name={message.user.name}
                       image={message.user.image}
-                      className="h-[90px] w-[90px]"
+                      className="h-[70px] w-[70px]"
                     />
                     <motion.div variants={badgeVariants} whileHover="hover">
                       <Star className="text-yellow-400 w-6 h-6" />
@@ -111,7 +113,7 @@ function ChatMessages({
                     <UserAvatar
                       name={message.user.name}
                       image={message.user.image}
-                      className="h-[80px] w-[80px]"
+                      className="h-[70px] w-[70px]"
                     />
                   </motion.div>
                 )}

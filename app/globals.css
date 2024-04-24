@@ -111,7 +111,21 @@
 .neon-glow {
   filter: drop-shadow(0 0 2px rgba(3, 143, 250, 0.8)) drop-shadow(0 0 10px rgba(13, 144, 245, 0.445))
 }
+.mapboxgl-control-container {
+  visibility: hidden !important;
+  background-color: green;
+  display: none;
+}
+.mapbox-improve-map {
+  display: none;
+}
+.mapboxgl-ctrl-bottom-right {
+  display: none;
+}
+.mapboxgl-ctrl-attrib-inner a:last-of-type { display: none; }
 
+.mapboxgl-ctrl-compass { display: none; }
+a.mapbox-improve-map{display: none;}
 .skill-node {
   display: flex;
   align-items: center;
