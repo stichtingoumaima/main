@@ -8,9 +8,9 @@ function BgVideo() {
       loop
       muted
       className="h-screen  w-screen object-fill absolute -z-10"
-      src="../assets/main.mp4"
+      src="../assets/betterview.mp4"
     >
-      <source src="../assets/main.mp4" type="video/mp4" />
+      <source src="../assets/betterview.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
 

@@ -63,7 +63,7 @@ function ChatMessages({
   };
 
   return (
-    <div className="flex flex-col w-5/12 bg-slate-800  p-5 bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
+    <div className="flex flex-col w-full h-full bg-slate-800  p-5 bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
     border-2 border-cyan-500
      ">
       {/* <AdminControls chatId={chatId} />
@@ -97,7 +97,7 @@ function ChatMessages({
                 )}
                 <div className={`flex flex-col ${isSender ? "items-end" : "items-start"} flex-1 min-w-0`}>
                   <p className="text-lg font-semibold mb-1">{message.user.name.split(" ")[0]}</p>
-                  <div className={`text-2xl text-[#323232] font-bold bg-[#D8D3C7] rounded-[80px] py-2 px-6 max-w-full ${isSender ? "ml-4" : "mr-4"}`}>
+                  <div className={`text-2xl text-[#323232] font-bold bg-[#D8D3C7] rounded-[80px] py-1 px-8 max-w-full ${isSender ? "ml-4" : "mr-4"}`}>
                     <p className="break-words overflow-hidden">
                       {message.translated?.[language] || message.input}
                     </p>
@@ -123,7 +123,7 @@ function ChatMessages({
           <div ref={messagesEndRef} />
         </motion.div>
       </div>
-      <ChatInput chatId={chatId} />
+      <ChatInput  chatId={chatId} />
     </div>
   );
 }

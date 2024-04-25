@@ -180,7 +180,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
   };
   return (
     <>
-      <div className="sticky bottom-0">
+      <div className="sticky bottom-0 ">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex space-x-2 py-5 max-2-4xl mx-auto p-16 border-[#00000048]">
             <FormField

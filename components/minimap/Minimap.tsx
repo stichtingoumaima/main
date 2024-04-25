@@ -5,7 +5,7 @@ import './app.css'
 function Minimap() {
     const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   return (
-    <div style={{ width: '250px', height: '250px', borderRadius: '50%', overflow: 'hidden' }}>
+    <div style={{ width: '300px', height: '300px', borderRadius: '50%', overflow: 'hidden' }}>
 
     <Map 
     mapboxAccessToken={mapboxToken}

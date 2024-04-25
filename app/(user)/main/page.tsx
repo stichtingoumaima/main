@@ -31,6 +31,7 @@ import {
   Clipboard,
   DoorOpen,
   DoorOpenIcon,
+  LayoutDashboard,
   LogOut,
   Mail,
   MailCheck,
@@ -44,12 +45,12 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-const Main = () => {
+const RightDrawer = () => {
   return (
-    <div className="relative h-screen">
+    <div className="">
       <Drawer direction="right">
-        <DrawerTrigger>Open</DrawerTrigger>
-        <DrawerContent className="flex flex-row  md:w-4/12 h-full border-l-gray-500 border-2">
+        <DrawerTrigger>          <LayoutDashboard className="text-white" size={50} /></DrawerTrigger>
+        <DrawerContent className=" right-0 top-0 mt-0 w-5/12 z-50  flex flex-row  md:w-5/12 h-full border-l-gray-500 border-2">
           <div className="flex flex-col bg-[#1D243B] w-full">
             {/* Profile Section */}
             <DrawerHeader>
@@ -164,4 +165,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default RightDrawer;
