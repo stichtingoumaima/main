@@ -98,7 +98,8 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <motion.div
-      className="p-4 max-w-lg mx-auto bg-slate-800 rounded-lg shadow-xl text-white"
+      className="p-4  bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
+      border-2 border-cyan-500 rounded-lg  text-white"
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -116,16 +117,16 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
             />
             <div className="flex flex-col">
               <h3 className="text-lg font-bold">{playerData.name}</h3>
-              <span className="text-sm text-gray-400">Combat Level: {playerData.combatLevel}</span>
+              <span className="text-sm text-white">Combat Level: {playerData.combatLevel}</span>
               <SkillBar xp={playerData.totalXP} level={playerData.combatLevel} />
             </div>
           </motion.div>
           <div className="mb-4 overflow-scroll h-2/3">
-            <h2 className="text-xl font-bold text-gray-400 mb-2 ">Player Stats</h2>
+            <h2 className="text-xl font-bold text-white mb-2 ">Player Stats</h2>
             <div className="grid grid-cols-3 gap-4 ">
               {Object.entries(playerData.gameSkills).map(([skill, value]) => (
                 <div key={skill} className="text-center">
-                  <p className="text-sm font-semibold text-gray-400 capitalize">{skill}</p>
+                  <p className="text-sm font-semibold text-white capitalize">{skill}</p>
                   <p className="text-lg font-bold">{value}</p>
                   <div className="mt-2 flex flex-col items-center">
                     {archetypes
@@ -170,12 +171,12 @@ const PlayerSkillsPanel: React.FC<{ userId: string }> = ({ userId }) => {
             </div>
           </div>
           <div className='max-h-96 overflow-scroll'>
-            <h2 className="text-xl font-bold text-gray-400 mb-2 ">Life Skills</h2>
+            <h2 className="text-xl font-bold text-white mb-2 ">Life Skills</h2>
             {lifeSkills.map(({ id, name, level, xp }) => (
               <div key={id} className="mb-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">{name}</h3>
-                  <span className="text-sm font-medium text-gray-400">Lvl {level}</span>
+                  <span className="text-sm font-medium text-white">Lvl {level}</span>
                 </div>
                 <SkillBar xp={xp} level={level} />
               </div>

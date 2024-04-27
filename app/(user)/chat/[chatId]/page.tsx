@@ -49,7 +49,7 @@ async function ChatPage({ params: { chatId } }: Props) {
             <Drawer>
   <DrawerTrigger  className=" bg-slate-800  py-2 px-20 mb-5 rounded-full bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
     border-2 border-cyan-500">Report Tasks To System</DrawerTrigger>
-  <DrawerContent className="flex flex-col bottom-0  ">
+  <DrawerContent className="flex flex-col bottom-0   ">
   <ChatMessages
               chatId={chatId}
               session={session}
@@ -59,7 +59,10 @@ async function ChatPage({ params: { chatId } }: Props) {
 </Drawer>     {/* Make sure messages are scrollable */}
 </div>
 
-        {/* session?.user.id && <PlayerSkillsPanel  userId={session.user.id} /> */}
+<div className="flex justify-end flex-1">
+{/* { session?.user.id && <PlayerSkillsPanel  userId={session.user.id} /> } */}
+</div>
+      
 
       </div>
     </>
