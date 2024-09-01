@@ -1,6 +1,5 @@
-import { About } from "@/components/landing/About";
+
 import { Hero } from "@/components/landing/Hero";
-import { FAQ } from "@/components/landing/FAQ";
 import { Pricing } from "@/components/subscription/Pricing";
 import { ScrollToTop } from "@/components/landing/ScrollToTop";
 import { Footer } from "@/components/landing/Footer";
@@ -11,10 +10,7 @@ export default function Home() {
     <main className="cursor-custom hover:cursor-custom">
       <Header />
       <Hero />
-      <About />
       <Pricing />
-
-      <FAQ />
       <Footer />
       <ScrollToTop />
     </main>

@@ -8,8 +8,6 @@ import { getDocs } from "firebase/firestore";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Main from "../../main/page";
-import Mapbox from "../../map/page";
-import Minimap from "@/components/minimap/Minimap";
 import { Button } from "@/components/ui/button";
 import { DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, Drawer } from "@/components/ui/drawer";
 import RightDrawer from "../../main/page";
@@ -42,7 +40,6 @@ async function ChatPage({ params: { chatId } }: Props) {
           <ChatList></ChatList>
         </div> */}
  <div className="w-[29.5%] flex  mt-20 ">
-     <Minimap></Minimap>
         </div>
             {" "}
             <div className="flex flex-col justify-end align-middle w-[40%]">
