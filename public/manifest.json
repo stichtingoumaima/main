@@ -22,13 +22,5 @@
   "dir": "auto",
   "lang": "nl-NL",
   "name": "irlquest",
-  "short_name": "irlquest",
-  "screenshots": [
-    {
-      "src": "/assets/barranen.png",
-      "sizes": "1636x931",
-      "type": "image/png",
-      "form_factor": "wide"
-    }
-  ]
+  "short_name": "irlquest"
 }
