@@ -97,7 +97,7 @@ function ChatMessages({
                 )}
                 <div className={`flex flex-col ${isSender ? "items-end" : "items-start"} flex-1 min-w-0`}>
                   <p className="text-lg font-semibold mb-1">{message.user.name.split(" ")[0]}</p>
-                  <div className={`text-2xl text-[#323232] font-bold bg-[#D8D3C7] rounded-[80px] py-1 px-8 max-w-full ${isSender ? "ml-4" : "mr-4"}`}>
+                  <div className={`text-2xl text-[#323232] font-bold bg-[#D8D3C7] py-1 px-8 max-w-full ${isSender ? "ml-4" : "mr-4"}`}>
                     <p className="break-words overflow-hidden">
                       {message.translated?.[language] || message.input}
                     </p>
