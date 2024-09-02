@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import {
   Drawer,
@@ -22,14 +23,12 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Backpack,
-  BackpackIcon,
   BanIcon,
   BookIcon,
   BookOpen,
   Calendar,
   CalendarCheck,
   Clipboard,
-  DoorOpen,
   DoorOpenIcon,
   LayoutDashboard,
   LogOut,
@@ -49,30 +48,28 @@ const RightDrawer = () => {
   return (
     <div className="">
       <Drawer direction="right">
-        <DrawerTrigger>          <LayoutDashboard className="text-white" size={50} /></DrawerTrigger>
-        <DrawerContent className=" right-0 top-0 mt-0 w-5/12 z-50  flex flex-row  md:w-5/12 h-full border-l-gray-500 border-2">
+        <DrawerTrigger>
+          <LayoutDashboard className="text-white w-7 h-7 md:w-10 md:h-10 lg:w-12 lg:h-12" />
+        </DrawerTrigger>
+        <DrawerContent className="right-0 top-0 mt-0 w-12/12 z-50 flex flex-row md:w-5/12 h-full border-l-gray-500 border-2 sm:w-full sm:h-screen">
           <div className="flex flex-col bg-[#1D243B] w-full">
             {/* Profile Section */}
             <DrawerHeader>
               <div className="flex items-center px-8 py-4 gap-8">
                 <div className="flex flex-col justify-between align-middle text-center">
-                  {/* <img
-                    src="/assets/2.png"
-                    alt="Profile"
-                    className="w-48 md:w-36 sm:w-24"
-                  /> */}
-                  <p className="text-[#8DC1DE] font-bold text-lg md:text-md sm:text-sm">
+                  {/* Replace with your actual profile image */}
+                  <p className="text-[#8DC1DE] font-bold  md:text-md sm:text-sm">
                     Lvl.9
                   </p>
                 </div>
                 <div className="flex flex-col h-full w-full">
-                  <DrawerTitle className="font-bold text-white text-3xl md:text-2xl sm:text-xl">
+                  <DrawerTitle className="font-bold text-white md:text-2xl sm:text-xl">
                     Sung Jinwoo
                   </DrawerTitle>
-                  <DrawerDescription className="text-[#F6E5BD] font-bold text-xl md:text-lg sm:text-md">
+                  <DrawerDescription className="text-[#F6E5BD] font-bold  md:text-lg sm:text-md">
                     gfffsbniutfg
                   </DrawerDescription>
-                  <DrawerDescription className="text-[#E0F6FF] font-semibold text-2xl md:text-xl sm:text-lg">
+                  <DrawerDescription className="text-[#E0F6FF] font-semibold  md:text-xl sm:text-lg">
                     Reputation 2 - 523/2500
                   </DrawerDescription>
                   <div className="w-full bg-gray-600 h-1.5 overflow-hidden mt-1">
@@ -89,15 +86,10 @@ const RightDrawer = () => {
             {/* Game Modes Button */}
             <div className="overflow-y-scroll overflow-x-hidden px-7 space-y-3">
               <button
-                className="bg-gray-700 p-2 border-[3px] border-[#688297] bg-cover bg-top text-white w-full my-4 relative h-32 md:h-24 sm:h-16"
+                className="bg-gray-700 p-2 border-[3px] border-[#688297] bg-cover bg-top text-white w-full my-4 relative  md:h-24 sm:h-16"
                 style={{ backgroundImage: "url('/assets/gamemode.webp')" }}
               >
                 <div className="flex items-center justify-start px-5 gap-4">
-                  {/* <img
-                    src="/assets/tower.png" // Replace with your actual tower icon path
-                    alt="Tower Icon"
-                    className="h-20 md:h-16 sm:h-12 mr-2" // Adjust the size as needed
-                  /> */}
                   <span className="text-4xl md:text-3xl sm:text-2xl font-bold text-[#D1EBFE] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
                     Game Modes
                   </span>
@@ -108,13 +100,13 @@ const RightDrawer = () => {
               <div className="flex flex-col py-2 space-y-4">
                 <div className="flex justify-between gap-4">
                   <div className="flex flex-col items-center border-[3px] border-[#5A6B80] p-2 w-full h-[8rem] md:h-20 sm:h-16 align-middle justify-center bg-[#1C2135]">
-                    <SwordIcon className="h-14 w-14 md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
+                    <SwordIcon className=" md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
                     <span className="text-[#C8DCE9] mt-1 font-semibold text-2xl md:text-xl sm:text-lg">
                       Weapons
                     </span>
                   </div>
                   <div className="flex flex-col items-center border-[3px] border-[#5A6B80] p-2 w-full h-[8rem] md:h-20 sm:h-16 align-middle justify-center bg-[#1C2135]">
-                    <ArchiveIcon className="h-14 w-14 md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
+                    <ArchiveIcon className=" md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
                     <span className="font-semibold text-2xl md:text-xl sm:text-lg mt-1">
                       Artifacts
                     </span>
@@ -125,13 +117,13 @@ const RightDrawer = () => {
               {/* Bottom Buttons */}
               <DrawerFooter className="flex p-0 justify-between flex-row">
                 <div className="flex flex-col items-center border-[3px] border-[#5A6B80] w-full h-[8rem] md:h-20 sm:h-16 align-middle justify-center bg-[#1C2135]">
-                  <Target className="h-14 w-14 md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
+                  <Target className=" md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
                   <span className="font-semibold text-2xl md:text-xl sm:text-lg mt-1">
                     Challenges
                   </span>
                 </div>
                 <div className="flex flex-col items-center border-[3px] border-[#5A6B80] w-full h-[8rem] md:h-20 sm:h-16 align-middle justify-center bg-[#1C2135]">
-                  <Clipboard className="h-14 w-14 md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
+                  <Clipboard className="md:h-10 md:w-10 sm:h-8 sm:w-8 text-white neon-glow" />
                   <span className="font-semibold text-2xl md:text-xl sm:text-lg mt-1">
                     Missions
                   </span>
@@ -139,7 +131,7 @@ const RightDrawer = () => {
               </DrawerFooter>
             </div>
           </div>
-          <div className="w-[17.5%] bg-[#1B2A36] flex flex-col border-l-[#2B4052] border-[3px] p-4 items-center ">
+          <div className="w-[17.5%] bg-[#1B2A36] flex flex-col border-l-[#2B4052] border-[3px] p-4 items-center">
             <div>
               <DoorOpenIcon className="text-white w-16 h-16 mb-10 neon-glow md:w-14 md:h-14 sm:w-12 sm:h-12" />
               <Separator />
