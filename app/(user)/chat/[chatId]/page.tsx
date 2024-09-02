@@ -44,7 +44,7 @@ async function ChatPage({ params: { chatId } }: Props) {
             {" "}
             <div className="flex flex-col justify-end align-middle w-[40%]">
             <Drawer>
-  <DrawerTrigger  className=" bg-slate-800 mb-5 bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
+  <DrawerTrigger  className=" bg-slate-800 mb-12 bg-opacity-70 shadow-[inset_1px_1px_40px_#0000FF73]
     border-2 border-cyan-500">Report Tasks To System</DrawerTrigger>
   <DrawerContent className="flex flex-col bottom-0   ">
   <ChatMessages

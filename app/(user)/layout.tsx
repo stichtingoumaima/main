@@ -1,4 +1,5 @@
 import BgVideo from "@/components/BgVideo";
+import BottomNavigation from "@/components/navigation/BottomNavigation";
 import TopNavigation from "@/components/navigation/Navigation";
 
 export default function ChatsLayout({
@@ -12,6 +13,7 @@ export default function ChatsLayout({
             <BgVideo/>
         
             {children}
+            <BottomNavigation/>
         </div>
     );
 }
