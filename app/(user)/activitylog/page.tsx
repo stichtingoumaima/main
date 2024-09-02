@@ -12,7 +12,7 @@ import { playerConverter } from "@/lib/converters/Player";
 const ActivityLogs = () => {
   const { data: session } = useSession();
   const [selectedCombatLevel, setSelectedCombatLevel] = useState(1);
-  const [combatLevels, setCombatLevels] = useState([]);
+  const [combatLevels, setCombatLevels] = useState<number[]>([]);
   const activityLogsQuery = query(
     collection(db, `players/${session?.user?.id}/activitylog`),
     where("combatLevelAtTimeOfActivity", "==", selectedCombatLevel)

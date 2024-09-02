@@ -10,6 +10,7 @@ import {
   onSnapshot,
   addDoc,
   serverTimestamp,
+  increment,
 } from "firebase/firestore";
 import { lifeSkillRef, lifeSkillsByNameRef } from "../converters/LifeSkill";
 import { playerConverter } from "../converters/Player";
@@ -17,6 +18,15 @@ import { playerConverter } from "../converters/Player";
 const XP_THRESHOLD_PER_LEVEL = 1000;
 const XP_GAIN_PER_LIFESKILL_LEVEL_UP = 500;
 const TOTAL_SKILL_POINTS_ON_LEVEL_UP = 10;
+interface GameSkillsUpdates {
+  [key: string]: any; // Use a more specific type if known, such as number
+}
+
+interface StatImpacts {
+  [key: string]: number;
+}
+type KnownStatImpacts = 'strength' | 'agility' | 'intelligence'; // Example keys
+
 
 export class SkillService {
   static async addXpToLifeSkill(userId: string, xpToAdd: number, skillName: string, statName: string): Promise<void> {
@@ -104,7 +114,7 @@ export class SkillService {
     static async updatePlayerXPAndSkillPoints(batch: any, userId: string, xpGained: number): Promise<void> {
         const playerDocumentRef = doc(db, "players", userId).withConverter(playerConverter);
         const playerSnap = await getDoc(playerDocumentRef);
-
+        let gameSkillsUpdates: GameSkillsUpdates = {};
         if (playerSnap.exists()) {
             const playerData = playerSnap.data();
             let newTotalXP = playerData.totalXP + xpGained;
@@ -113,9 +123,9 @@ export class SkillService {
             // Check for level up
             if (newCombatLevel > playerData.combatLevel) {
                 const skillPointsAllocation = await this.calculateSkillPointsAllocation(userId, playerData.combatLevel);
-                let gameSkillsUpdates = {};
+                let gameSkillsUpdates: GameSkillsUpdates = {};
                 Object.entries(skillPointsAllocation).forEach(([stat, points]) => {
-                    gameSkillsUpdates[`gameSkills.${stat}`] = increment(points);
+                  gameSkillsUpdates[`gameSkills.${stat}`] = increment(points);
                 });
 
                 batch.update(playerDocumentRef, {
@@ -146,18 +156,18 @@ export class SkillService {
         const querySnapshot = await getDocs(q);
         let statImpacts = {};
 
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            statImpacts[data.statImpacted] = (statImpacts[data.statImpacted] || 0) + 1;
-        });
+        // querySnapshot.forEach((doc) => {
+        //     const data = doc.data();
+        //     statImpacts[data.statImpacted] = (statImpacts[data.statImpacted] || 0) + 1;
+        // });
 
         const totalActivities = querySnapshot.docs.length;
         let skillPointsAllocation = {};
         
-        Object.keys(statImpacts).forEach((stat) => {
-            const percentage = statImpacts[stat] / totalActivities;
-            skillPointsAllocation[stat] = Math.round(TOTAL_SKILL_POINTS_ON_LEVEL_UP * percentage);
-        });
+        // Object.keys(statImpacts).forEach((stat) => {
+        //     const percentage = statImpacts[stat] / totalActivities;
+        //     skillPointsAllocation[stat] = Math.round(TOTAL_SKILL_POINTS_ON_LEVEL_UP * percentage);
+        // });
 
         return skillPointsAllocation;
     }

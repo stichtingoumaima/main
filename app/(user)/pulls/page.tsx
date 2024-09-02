@@ -12,11 +12,16 @@ const characters = Array.from({ length: 5 }, (_, i) => ({
   imagePath: `/assets/character${1}.png`, // Make sure the image paths are correct
   rarity: i % 2 === 0 ? 'rare_holo' : 'normal'
 }));
-
-const CharacterCard = ({ name, level, imagePath, rarity }) => {
+interface CharacterCardProps {
+  name: string;
+  level: number;
+  imagePath: string;
+  rarity: string; // Adjust if you have specific types for rarity
+}
+const CharacterCard: React.FC<CharacterCardProps> = ({ name, level, imagePath, rarity }) => {
   const [gradientPosition, setGradientPosition] = useState({ x: 50, y: 50 }); // Default to center
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // x position within the element.
     const y = e.clientY - rect.top;  // y position within the element.
@@ -42,7 +47,7 @@ const CharacterCard = ({ name, level, imagePath, rarity }) => {
         }}
       ></div>
       <div className="absolute inset-0 bg-cover bg-center">
-        <img
+        {/* <img
           src="https://assets.codepen.io/13471/sparkles.gif"
           alt="Sparkles"
           style={{
@@ -55,7 +60,7 @@ const CharacterCard = ({ name, level, imagePath, rarity }) => {
             height: '200px',
             opacity: '0.75'
           }}
-        />
+        /> */}
       </div>
       <div className="bg-purple-600 text-white text-xs px-2 py-1 absolute z-10 right-0 top-0 m-1">
         {/* {rank} */}

@@ -7,12 +7,14 @@ import { ArrowLeftCircle, PlusCircle, Bell, Sliders, XCircle, Info, BookOpen, Fi
 import { Separator } from '@/components/ui/separator';
 import TopNavigation from '@/components/navigation/Navigation';
 
-
-const NavItem = ({ icon: Icon }) => (
+interface NavItemProps {
+  icon: React.ComponentType; // or a more specific type if known
+}
+const NavItem: React.FC<NavItemProps> = ({ icon: Icon }) => (
   <div className="flex items-center space-x-8 ml-[2.8rem] space-y-6">
     <div className="w-[0.45rem] h-[0.45rem] bg-white rounded-full" />
     <div className="border border-gray-300 border-opacity-20 rounded-full p-4  ">
-      <Icon className="text-white" size={42} />
+      <Icon />
     </div>
   </div>
 );
@@ -26,8 +28,12 @@ const LeftSideNav = () => (
     <NavItem icon={FileText} />
   </div>
 );
-
-const MissionItem = ({ title, progress, points }) => (
+interface MissionItemProps {
+  title: string;
+  progress: number;
+  points: string;
+}
+const MissionItem: React.FC<MissionItemProps> = ({ title, progress, points }) => (
   <div className="flex justify-between items-center bg-black bg-opacity-40 text-white py-2 px-4  shadow-md h-28 border-l-cyan-500 border-l-[3px]">
     <div className='flex flex-col justify-around h-full w-4/6'>
       <h3 className="font-bold text-xl">{title}</h3>

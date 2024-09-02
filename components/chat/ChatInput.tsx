@@ -148,7 +148,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
   const acceptXP = async () => {
     try {
             await logActivity(xpDetails);
-      await SkillService.addXpToLifeSkill(session.user.id!, xpDetails.xp, xpDetails.skill,xpDetails.stat);
+      await SkillService.addXpToLifeSkill(session?.user.id!, xpDetails.xp, xpDetails.skill,xpDetails.stat);
       handleLevelUp();
       toast({
         title: "XP Added",
@@ -225,7 +225,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
             <DialogContent>
               <DialogTitle>Level Up!</DialogTitle>
               <DialogDescription>
-                Congratulations! Your character's stats have improved!
+                Congratulations! Your charactes stats have improved!
               </DialogDescription>
               <motion.div
                 initial={{ color: 'red' }}

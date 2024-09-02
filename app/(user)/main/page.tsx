@@ -56,11 +56,11 @@ const RightDrawer = () => {
             <DrawerHeader>
               <div className="flex items-center px-8 py-4 gap-8">
                 <div className="flex flex-col justify-between align-middle text-center">
-                  <img
+                  {/* <img
                     src="/assets/2.png"
                     alt="Profile"
                     className="w-48 md:w-36 sm:w-24"
-                  />
+                  /> */}
                   <p className="text-[#8DC1DE] font-bold text-lg md:text-md sm:text-sm">
                     Lvl.9
                   </p>
@@ -93,11 +93,11 @@ const RightDrawer = () => {
                 style={{ backgroundImage: "url('/assets/gamemode.webp')" }}
               >
                 <div className="flex items-center justify-start px-5 gap-4">
-                  <img
+                  {/* <img
                     src="/assets/tower.png" // Replace with your actual tower icon path
                     alt="Tower Icon"
                     className="h-20 md:h-16 sm:h-12 mr-2" // Adjust the size as needed
-                  />
+                  /> */}
                   <span className="text-4xl md:text-3xl sm:text-2xl font-bold text-[#D1EBFE] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
                     Game Modes
                   </span>

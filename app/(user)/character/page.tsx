@@ -11,10 +11,16 @@ const characters = Array.from({ length: 10 }, (_, i) => ({
   rarity: i % 2 === 0 ? 'rare_holo' : 'normal'
 }));
 
-const CharacterCard = ({ name, level, imagePath, rarity }) => {
+interface CharacterCardProps {
+  name: string;
+  level: number;
+  imagePath: string;
+  rarity: string; // or a more specific type if applicable
+}
+const CharacterCard: React.FC<CharacterCardProps> = ({ name, level, imagePath, rarity }) => {
   const [gradientPosition, setGradientPosition] = useState({ x: 50, y: 50 }); // Default to center
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove =  (e: React.MouseEvent)  => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // x position within the element.
     const y = e.clientY - rect.top;  // y position within the element.
@@ -40,7 +46,7 @@ const CharacterCard = ({ name, level, imagePath, rarity }) => {
         }}
       ></div>
       <div className="absolute inset-0 bg-cover bg-center">
-        <img
+        {/* <img
           src="https://assets.codepen.io/13471/sparkles.gif"
           alt="Sparkles"
           style={{
@@ -51,7 +57,7 @@ const CharacterCard = ({ name, level, imagePath, rarity }) => {
             transform: 'translate(-50%, -50%)',
             opacity: '0.75'
           }}
-        />
+        /> */}
       </div>
       <div className="bg-purple-600 text-white text-xs px-2 py-1 absolute z-10 right-0 top-0 m-1">
         {/* {rank} */}
@@ -101,7 +107,7 @@ const CharacterInfo = () => (
     <div className="flex justify-between items-center bg-black bg-opacity-50 p-2 ">
       <span className="text-xs">Lv. 1</span>
       <div className="flex-grow">
-        <img src="/assets/barran.png" alt="Weapon" className="h-16 mx-auto" />
+        {/* <img src="/assets/barran.png" alt="Weapon" className="h-16 mx-auto" /> */}
       </div>
       <span className="text-xs">Hatchet</span>
     </div>
