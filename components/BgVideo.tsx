@@ -7,7 +7,7 @@ function BgVideo() {
       autoPlay
       loop
       muted
-      className="h-screen  w-screen object-fill absolute -z-10"
+      className="h-screen  w-screen c absolute -z-10"
       src="../assets/betterview.mp4"
     >
       <source src="../assets/betterview.mp4" type="video/mp4" />
