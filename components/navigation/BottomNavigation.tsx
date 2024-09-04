@@ -1,13 +1,5 @@
-import RightDrawer from "@/app/(user)/main/page";
+
 import {
-  StepBack,
-  Info,
-  Gift,
-  Flower,
-  Plus,
-  Coins,
-  LayoutDashboard,
-  DoorOpen,
   BarChart,
   Swords,
   Fan,
@@ -20,7 +12,7 @@ import {
 const TopNavigation = () => {
   return (
     <div
-      className="fixed w-full bottom-0 bg-slate-950 shadow-[inset_1px_1px_40px_#0000FF73]
+      className="fixed w-full bottom-0 bg-[#1D243B] shadow-[inset_1px_1px_40px_#0000FF73] z-50
    flex items-center justify-center  h-16"
     >
       <div className="flex items-center">

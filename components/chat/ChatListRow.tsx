@@ -21,12 +21,6 @@ function ChatListRow({ chatId }: { chatId: string }) {
 
     const prettyUUID = (n = 4) => chatId.substring(0, n);
 
-    const rowVariants = {
-        initial: { y: 20, opacity: 0 },
-        enter: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100, damping: 10 } },
-        hover: { scale: 1.02, transition: { duration: 0.2 } },
-        tap: { scale: 0.98 }
-    };
 
     const row = (message?: Message) => (
         <motion.div
@@ -35,10 +29,9 @@ function ChatListRow({ chatId }: { chatId: string }) {
                 setActiveChatId(chatId);
                 router.push(`/chat/${chatId}`);
             }}
-            className={`flex items-center space-x-3 cursor-pointer py-3 px-4 my-1 
+            className={`space-x-3 cursor-pointer py-3 px-4 my-1 
                         ${isActive ? "dark:bg-[#414856] border-l-4 border-blue-500 shadow-lg" : "bg-gray-100 dark:bg-[#252736] dark:border-[#333]"} 
                         rounded-lg transition-all duration-300 ease-in-out`}
-            variants={rowVariants}
             initial="initial"
             animate="enter"
             whileHover="hover"

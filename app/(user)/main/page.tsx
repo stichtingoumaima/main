@@ -52,7 +52,7 @@ const RightDrawer = () => {
           <LayoutDashboard className="text-white w-12 h-12" />
         </DrawerTrigger>
         <DrawerContent className="right-0 top-0 mt-0 w-12/12 z-50 flex flex-row md:w-5/12 border-l-gray-500 border-2 w-full h-screen">
-          <div className="flex flex-col bg-[#1D243B] w-full">
+          <div className="flex flex-col bg-[#1D243B]  w-full">
             {/* Profile Section */}
             <DrawerHeader>
               <div className="flex items-center px-8 py-4 gap-8">
