@@ -10,10 +10,10 @@ function BgVideo() {
           autoPlay
           loop
           muted
-          className="absolute top-0 left-0 w-full h-full object-cover lg:object-contain xl:object-contain"
-          src="../assets/0.mp4"
+          className="absolute top-0 left-0 w-full h-full object-cover lg:fill xl:object-fill 2xl:fill"
+          src="../assets/1.mp4"
         >
-          <source src="../assets/0.mp4" type="video/mp4" />
+          <source src="../assets/1.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
