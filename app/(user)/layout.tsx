@@ -9,7 +9,7 @@ export default function ChatsLayout({
 }) {
     return (
         <div className=" cursor-default">
-            <TopNavigation/>
+            {/* <TopNavigation/> */}
             <BgVideo/>
         
             {children}
